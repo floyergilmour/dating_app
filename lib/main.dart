@@ -3,34 +3,33 @@ import 'package:school_app/User/User.dart';
 import 'sideDrawer/sideDrawer.dart';
 import 'mainAppBar/mainAppBar.dart';
 import 'package:school_app/NavToNewPageBottomNav/NavToNewPageBottomNav.dart';
+import 'package:school_app/loginScreen/loginScreen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(SchoolApp());
 }
 
 final String HomePageTitle = "Hvitfedltska Gymnasiet";
 
-class MyApp extends StatelessWidget {
+class SchoolApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demop',
       theme: ThemeData(primarySwatch: Colors.amber),
-      home: MyHomePage(title: HomePageTitle),
+      home: loginScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
+class StartPage extends StatefulWidget {
+  StartPage({Key key, this.title}) : super(key: key);
   final String title;
-
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _StartPageState createState() => _StartPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _StartPageState extends State<StartPage> {
   int  selectedPage = 0;
 
   @override
