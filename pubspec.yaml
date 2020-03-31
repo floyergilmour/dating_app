@@ -48,6 +48,9 @@ flutter:
     - assets/images/hvitfeldtska.png
     - assets/images/harvard.jpg
     - assets/images/mockProfileImage.jpeg
+    - assets/images/mockProfileImage.jpeg
+    - assets/icons/facebook_logo.png
+    - assets/icons/google_logo.png
      #- images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
