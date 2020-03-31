@@ -10,7 +10,7 @@ class sideDrawer extends StatelessWidget {
           Expanded(
               flex: 2,
               child: Container(
-                  width: MediaQuery.of(context).size.width * 0.85,
+                  //width: MediaQuery.of(context).size.width * 0.85,
                   child: DrawerHeader(
                     decoration: BoxDecoration(
                         image: DecorationImage(
