@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:school_app/User/User.dart';
 import 'sideDrawer/sideDrawer.dart';
 import 'mainAppBar/mainAppBar.dart';
+import 'package:school_app/NavToNewPageBottomNav/NavToNewPageBottomNav.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,13 +31,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   int  selectedPage = 0;
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +46,9 @@ class _MyHomePageState extends State<MyHomePage> {
         gender: Gender.male);
 
     final _pageOptions = [
-      Text("Person",),
-      Text("Home",),
-      Text("Messages"),
+      Text("Person", style: TextStyle(fontSize: 18.0),),
+      Text("Home", style: TextStyle(fontSize: 18.0),),
+      Text("Messages", style: TextStyle(fontSize: 18.0),),
     ];
 
     return Scaffold(
@@ -66,9 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: ListView(
           children: <Widget>[
-            Text(person1.getFullName()),
-            Text(person1.getAge().toString()),
-            _pageOptions[selectedPage],
+            Center(child: Text(person1.getFullName(),style: TextStyle(fontSize: 18.0),)),
+            Center(child: Text(person1.getAge().toString(),style: TextStyle(fontSize: 18.0),)),
+            Center(child: _pageOptions[selectedPage]),
             ]
           ),
       )
@@ -89,32 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
       //),
       //),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: selectedPage,
-          onTap: (index) {
-            setState(() {
-              selectedPage = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                title: Text("Person")
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text("Home"),
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.message),
-                title: Text("Messages")
-            ),
-          ]
-      ),
+      bottomNavigationBar: NavToNewPageBottomNav(),
     );
   }
 }
