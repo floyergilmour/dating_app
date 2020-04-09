@@ -1,12 +1,19 @@
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
-
-
-class profile extends StatelessWidget {
+class Profile extends StatelessWidget{
 
   @override
-  PageRoute build(BuildContext context) {
-return MaterialPageRoute(builder: (BuildContext context) {});
-}}
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          //SliverPersistentHeader(
 
- */
+          //  pinned: false,
+          //  floating: true,
+          //)
+        ],
+      ),
+    );
+  }
+}
