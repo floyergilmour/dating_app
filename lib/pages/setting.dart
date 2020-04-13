@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:school_app/User/userState.dart';
+import 'package:provider/provider.dart';
 
 class Setting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    UserState user = Provider.of<UserState>(context, listen: true);
     return Scaffold(
       body: Center(
           child: Container(

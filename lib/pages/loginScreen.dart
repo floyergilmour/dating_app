@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:school_app/User/user_2.dart';
+import 'package:school_app/User/user.dart';
+import 'package:school_app/User/userState.dart';
 import 'package:school_app/start_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,9 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
 
   @override
   Widget build(BuildContext context) {
-    UserState2 userState = Provider.of<UserState2>(context);
+    UserState _userState = Provider.of<UserState>(context);
     Auth _auth = Provider.of<Auth>(context);
+    User _user = Provider.of<User>(context);
 
 
     Future<void> signIn(BuildContext context) async {
@@ -28,18 +30,19 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
 
       if (formState.validate()) {
         formState.save();
-
-        try// (await user.signIn(_email, _password)){
+        try
           {
           print(DateTime.now().toString() + ": loginScreen.dart : signIn() : email="+_email);
           print(DateTime.now().toString() + ": loginScreen.dart : signIn() : password="+_password);
-          String user = await _auth.signInWithEmailAndPassword(_email, _password);
-          if(user.isNotEmpty){
-            userState.setStatus = UserStatus2.Authenticated;
+          String returnedUserId = await _auth.signInWithEmailAndPassword(_email, _password);
+          if(returnedUserId.isNotEmpty){
+            _userState.setStatus = UserStatus.Authenticated;
+            await _user.setUserSuccessful(returnedUserId);
             notifyListeners();
+            print(DateTime.now().toString() + ": loginScreen.dart: signIn() : Pressed login and successfully logged in!!");
+            print(DateTime.now().toString() + ": loginScreen.dart: signIn() : user.returnedUserId: "+returnedUserId);
           }
-          print(DateTime.now().toString() + ": loginScreen.dart: signIn() : Pressed login and successfully logged in!!");
-          print(DateTime.now().toString() + ": loginScreen.dart: signIn() : user.status: "+user);
+
         } catch(error) {
           Scaffold.of(context).showSnackBar(
               SnackBar(content: Text(error.toString()),),

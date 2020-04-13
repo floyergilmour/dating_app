@@ -1,20 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:school_app/User/user.dart';
-import 'package:school_app/User/user_2.dart';
+import 'package:school_app/User/userState.dart';
 import 'package:school_app/components/bottomNavigationBarProvider.dart';
-import 'package:school_app/components/mainAppBar.dart';
-import 'package:school_app/components/hamburgerMenu.dart';
 import 'package:school_app/pages/profile.dart';
 import 'package:provider/provider.dart';
-import 'package:school_app/pages/loginScreen.dart';
 import 'package:flutter/foundation.dart';
 
 import 'User/auth.dart';
 
 class StartPage extends StatelessWidget with ChangeNotifier{
-  //StartPage({Key key, this.user}) : super(key: key);
-  //final FirebaseUser user;
 
   var currentTab = [
     Scaffold(
@@ -29,7 +22,7 @@ class StartPage extends StatelessWidget with ChangeNotifier{
   @override
   Widget build(BuildContext context) {
     final NavbarProvider = Provider.of<BottomNavigationBarProvider>(context, listen: true);
-    UserState2 _userState = Provider.of<UserState2>(context, listen: true);
+    UserState _userState = Provider.of<UserState>(context, listen: true);
     final _auth = Provider.of<Auth>(context);
 
     return Scaffold(
@@ -69,7 +62,7 @@ class StartPage extends StatelessWidget with ChangeNotifier{
 
           if(index == 4){
             _auth.signOut();
-            _userState.setStatus = UserStatus2.UnAuthenticated;
+            _userState.setStatus = UserStatus.UnAuthenticated;
             NavbarProvider.currentIndex = 0;
             //userState.dispose();
           }
