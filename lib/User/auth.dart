@@ -1,22 +1,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
-import 'package:school_app/User/user.dart';
-import 'package:school_app/User/user_2.dart';
-/*
-abstract class BaseAuth extends ChangeNotifier{
-  build(BuildContext context) {
-    UserState2 userState = Provider.of<UserState2>(context, listen: true);
-  }
-  Future<String> signInWithEmailAndPassword(String email, String password);
-  Future<String> createUserWithEmailAndPassword(String email, String password);
-  Future<String> currentUser();
-  Future<void> signOut();
-}
 
-
- */
 class Auth extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 

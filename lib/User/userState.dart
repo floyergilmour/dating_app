@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 
-enum UserStatus2 { Uninitialized, Authenticated, UnAuthenticated }
+enum UserStatus { Uninitialized, Authenticated, UnAuthenticated }
 
-class UserState2 with ChangeNotifier {
-  UserStatus2 _status = UserStatus2.UnAuthenticated;
+class UserState with ChangeNotifier {
+  UserStatus _status = UserStatus.Uninitialized;
 
-  UserStatus2 get status => _status;
-  set setStatus(UserStatus2 s) {
+  UserStatus get status => _status;
+  set setStatus(UserStatus s) {
     _status = s;
     notifyListeners();
   }
