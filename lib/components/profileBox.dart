@@ -56,7 +56,7 @@ class _ProfileBoxState extends State<ProfileBox> {
     return Container(
       alignment: Alignment.center,
       decoration: new BoxDecoration(
-          color: Color.fromRGBO(250, 128, 128, 1),
+          color: Color.fromRGBO(250, 128, 128, 0.8),
           borderRadius: new BorderRadius.all(Radius.circular(40.0)),
       ),
       padding: EdgeInsets.all(7),
