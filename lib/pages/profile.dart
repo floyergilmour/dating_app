@@ -23,7 +23,7 @@ class Profile extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverPersistentHeader(
-            pinned: true,
+            pinned: false,
             floating: false,
             delegate: _SliverAppBarDelegate(),
           ),
@@ -47,7 +47,7 @@ class Profile extends StatelessWidget {
                         "/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
                     fit: BoxFit.fitHeight,
                   ),
-                  color: _randomColor(index),
+                  //color: _randomColor(index),
                   height: 200.0);
             }),
           ),
@@ -94,12 +94,11 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          Container(color: Color.fromRGBO(250, 128, 128, 1)),
+          //Container(color: Color.fromRGBO(250, 128, 128, 1)),
           Opacity(
             opacity: animationVal,
             child: Image(
-              image: AssetImage(
-                  "/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
+              image: AssetImage("/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
               fit: BoxFit.fitWidth,
             ),
           ),

@@ -11,7 +11,7 @@ class User extends ChangeNotifier{
   Firestore db = Firestore.instance;
 
   String _userId, _firstName, _lastName, _middleName, _school, _email, _description;
-  List<String> _ideology;
+  List<String> _ideologies, _interests, _religions;
   UserType _userType;
   DateTime _dateOfBirth;
   Gender _gender;
@@ -23,7 +23,9 @@ class User extends ChangeNotifier{
   String get school => _school;
   String get email => _email;
   String get description => _description;
-  List<String> get ideology => _ideology;
+  List<String> get ideologies => _ideologies;
+  List<String> get interests => _interests;
+  List<String> get religions => _religions;
   UserType get userType => _userType;
   DateTime get dateOfBirth => _dateOfBirth;
   Gender get gender => _gender;
@@ -91,7 +93,9 @@ class User extends ChangeNotifier{
       _dateOfBirth = DateTime(dob.year, dob.month, dob.day);
       _gender = stringToGender(userResult.data["gender"]);
       _description = userResult.data["description"];
-      _ideology = List.from(userResult.data["ideology"]);
+      _ideologies = List.from(userResult.data["ideologies"]);
+      _interests = List.from(userResult.data["interests"]);
+      _religions = List.from(userResult.data["religions"]);
 
       ;
       notifyListeners();
