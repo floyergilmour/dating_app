@@ -18,22 +18,40 @@ class _ProfileBoxState extends State<ProfileBox> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _profileBoxTitle(_user),
-          Container(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: _user.ideology.length,
-              itemBuilder: (BuildContext context, int index) {
-                return _buildSimilarityBoxes(_user.ideology[index]);
-              },
-            ),
-          ),
           SizedBox(height: 13,),
-          Text(
-            _user.description,
-          ),
+          Row(children: _buildTags(_user.ideologies, Color.fromRGBO(250, 128, 128, 0.8)),),
+          SizedBox(height: 13,),
+          Row(children: _buildTags(_user.religions, Color.fromRGBO(240, 246, 150, 0.8)),),
+          SizedBox(height: 13,),
+          Row(children: _buildTags(_user.interests, Color.fromRGBO(150, 247, 210, 0.8)),),
+          SizedBox(height: 13,),
+          Text(_user.description,),
+
         ],
       ),
     );
+  }
+
+  List<Row> _buildTags(List<String> tags, Color c){
+
+    var tagsList = tags.map((element) =>
+        Row(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.center,
+              decoration: new BoxDecoration(
+                color: c,
+                borderRadius: new BorderRadius.all(Radius.circular(40.0)),
+              ),
+              padding: EdgeInsets.all(7),
+              child: Text(element.capitalize(), style: TextStyle(fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(width: 3,)
+          ],
+        )
+    ).toList();
+
+    return tagsList;
   }
 
   Row _profileBoxTitle(User user) {
@@ -52,15 +70,4 @@ class _ProfileBoxState extends State<ProfileBox> {
     );
   }
 
-  Container _buildSimilarityBoxes(String element) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: new BoxDecoration(
-          color: Color.fromRGBO(250, 128, 128, 0.8),
-          borderRadius: new BorderRadius.all(Radius.circular(40.0)),
-      ),
-      padding: EdgeInsets.all(7),
-      child: Text(element.capitalize(), style: TextStyle(fontWeight: FontWeight.bold)),
-    );
-  }
 }
