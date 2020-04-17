@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:school_app/User/user.dart';
 import 'package:school_app/User/userState.dart';
-import 'package:school_app/start_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:school_app/User/auth.dart';
+import 'package:school_app/pages/signUpScreen.dart';
 
 enum FormType {
   login,
@@ -15,7 +14,9 @@ enum FormType {
 
 class LoginScreen extends StatelessWidget with ChangeNotifier {
   String _email, _password;
+  FormType _formType = FormType.login;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   //final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -24,47 +25,98 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
     Auth _auth = Provider.of<Auth>(context);
     User _user = Provider.of<User>(context);
 
+    String _pwrValidator(password) {
+      Pattern pattern =
+          r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
+      RegExp regex = new RegExp(pattern);
+      if (!regex.hasMatch(password))
+        return 'Invalid password';
+      else
+        return null;
+    }
 
-    Future<void> signIn(BuildContext context) async {
-      final formState = _formKey.currentState;
+    List<Widget> _buildTexInputs(){
+      return [
+        TextFormField(
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(20.0),
+            hintText: "Email or Phone number",
+            border: InputBorder.none,
+            hintStyle:
+            TextStyle(color: Colors.grey),
+          ),
+          validator: (email) =>
+          EmailValidator.validate(email)
+              ? null
+              : "Invalid email address",
+          onSaved: (email) => _email = email,
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        TextFormField(
+          obscureText: true,
+          decoration: InputDecoration(
+            hintText: "Password",
+            hintStyle:
+            TextStyle(color: Colors.grey),
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.all(20.0),
+          ),
+          onSaved: (password) =>
+          _password = password,
+          validator: _pwrValidator,
+        )
+      ];
+    }
 
+
+
+    Future<void> _signUp() async {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SignUpScreen()),
+      );
+    }
+
+    void _moveToRegister(){
+      _formType = FormType.register;
+    }
+
+      Future<void> signIn(BuildContext context) async {
+        final formState = _formKey.currentState;
       if (formState.validate()) {
         formState.save();
-        try
-          {
-          print(DateTime.now().toString() + ": loginScreen.dart : signIn() : email="+_email);
-          print(DateTime.now().toString() + ": loginScreen.dart : signIn() : password="+_password);
-          String returnedUserId = await _auth.signInWithEmailAndPassword(_email, _password);
-          if(returnedUserId.isNotEmpty){
+        try {
+          String returnedUserId =
+              await _auth.signInWithEmailAndPassword(_email, _password);
+          if (returnedUserId.isNotEmpty) {
             _userState.setStatus = UserStatus.Authenticated;
             await _user.setUserSuccessful(returnedUserId);
             notifyListeners();
-            print(DateTime.now().toString() + ": loginScreen.dart: signIn() : Pressed login and successfully logged in!!");
-            print(DateTime.now().toString() + ": loginScreen.dart: signIn() : user.returnedUserId: "+returnedUserId);
           }
-
-        } catch(error) {
+        } catch (error) {
           Scaffold.of(context).showSnackBar(
-              SnackBar(content: Text(error.toString()),),
+            SnackBar(
+              content: Text(error.toString()),
+            ),
           );
         }
-      }
-      else {
+      } else {
         Scaffold.of(context).showSnackBar(
             SnackBar(content: Text('Please enter a valid email')));
       }
     }
-
 
     return Scaffold(
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-              // https://colorsinspo.com/
-              Color.fromRGBO(250, 128, 128, 1),
-              Color.fromRGBO(150, 247, 210, 1),
-            ])),
+          // https://colorsinspo.com/
+          Color.fromRGBO(250, 128, 128, 1),
+          Color.fromRGBO(150, 247, 210, 1),
+        ])),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -108,7 +160,9 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
                     padding: EdgeInsets.all(30),
                     child: Column(
                       children: <Widget>[
-                        SizedBox(height: 60,),
+                        SizedBox(
+                          height: 60,
+                        ),
                         Container(
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -123,51 +177,20 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
                               children: <Widget>[
                                 Form(
                                     key: _formKey,
-                                    child: Column(children: <Widget>[
-                                      TextFormField(
-                                        decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.all(20.0),
-                                          hintText: "Email or Phone number",
-                                          border: InputBorder.none,
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey),
-                                        ),
-                                        validator: (email) =>
-                                        EmailValidator.validate(email)
-                                            ? null
-                                            : "Invalid email address",
-                                        onSaved: (email) => _email = email,
-                                      ),
-                                      SizedBox(height: 10,),
-                                      TextFormField(
-                                        obscureText: true,
-                                        decoration: InputDecoration(
-                                          hintText: "Password",
-                                          hintStyle: TextStyle(
-                                              color: Colors.grey),
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.all(20.0),
-                                        ),
-                                        onSaved: (password) =>
-                                        _password = password,
-                                        validator: (password) {
-                                          Pattern pattern = r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
-                                          RegExp regex = new RegExp(pattern);
-                                          if (!regex.hasMatch(password))
-                                            return 'Invalid password';
-                                          else
-                                            return null;
-                                          },
-                                      ),
-                                    ])),
+                                    child: Column(children: _buildTexInputs(),
+                                    )),
                               ],
                             )),
-                        SizedBox(height: 40,),
+                        SizedBox(
+                          height: 40,
+                        ),
                         Text(
                           "Forgot Password?",
                           style: TextStyle(color: Colors.grey),
                         ),
-                        SizedBox(height: 40,),
+                        SizedBox(
+                          height: 40,
+                        ),
                         //user.status == UserStatus.Authenticating
                         //    ? Center(child: CircularProgressIndicator()):
                         Builder(
@@ -189,9 +212,21 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
                             ),
                           ),
                         ),
-                        SizedBox(height: 50,),
-                        Text(
-                            "Continue with social media",
+                        SizedBox(
+                          height: 50,
+                        ),
+                        InkWell(
+                          splashColor: Colors.yellow,
+                          hoverColor: Colors.red,
+                          highlightColor: Colors.blue,
+                          child: Text("Sign Up",
+                              style: TextStyle(color: Colors.grey)),
+                          onTap: _moveToRegister,
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Text("Continue with social media",
                             style: TextStyle(color: Colors.grey)),
                         SizedBox(
                           height: 50,
@@ -207,8 +242,5 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
         ),
       ),
     );
-
   }
-
-
 }
