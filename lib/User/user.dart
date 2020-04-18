@@ -30,6 +30,10 @@ class User extends ChangeNotifier{
   DateTime get dateOfBirth => _dateOfBirth;
   Gender get gender => _gender;
   int get age {
+
+    if (_dateOfBirth == null) {
+      return null;
+    }
     var secondsDiff = DateTime.now().difference(_dateOfBirth.toLocal());
     var years = (secondsDiff.inDays/365).floor();
     return years;
@@ -97,13 +101,28 @@ class User extends ChangeNotifier{
       _interests = List.from(userResult.data["interests"]);
       _religions = List.from(userResult.data["religions"]);
 
-      ;
       notifyListeners();
       return true;
     }
     catch(error){
       print('========= Error in getting data =========');
       print(error);
+      print("Setting default values");
+
+      _userId = userId;
+      _firstName = null;
+      _lastName = null;
+      _middleName = null;
+      _school = null;
+      _email =null;
+      _userType =UserType.admin;
+      _dateOfBirth =null;
+      _gender =Gender.missing;
+      _description ='';
+      _ideologies =[];
+      _interests =[];
+      _religions =[];
+      notifyListeners();
       return false;
     }
 

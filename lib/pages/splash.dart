@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/User/userState.dart';
 import 'package:provider/provider.dart';
-import 'dart:io';
 
 class Splash extends StatelessWidget with ChangeNotifier {
   Splash({Key key}) : super(key: key);
