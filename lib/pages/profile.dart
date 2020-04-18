@@ -3,16 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:school_app/extensions/extensions.dart';
 import 'package:school_app/components/profileBox.dart';
-class Profile extends StatelessWidget {
-  Color _randomColor(int index) {
-    if (index % 3 == 0) {
-      return Colors.pink;
-    } else if (index % 3 == 1) {
-      return Colors.blueAccent;
-    }
 
-    return Colors.amber;
-  }
+class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {

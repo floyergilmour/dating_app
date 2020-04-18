@@ -3,30 +3,28 @@ import 'package:school_app/User/userState.dart';
 import 'package:school_app/pages/loginScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/pages/splash.dart';
-import 'package:school_app/start_page.dart';
+import 'package:school_app/pages/start_page.dart';
 import 'package:school_app/components/bottomNavigationBarProvider.dart';
 import 'package:school_app/User/auth.dart';
 import 'package:school_app/components/formState.dart';
 import 'User/user.dart';
+import 'package:school_app/themeColor/themeColor.dart';
 
 void main() {
   runApp(SchoolApp());
 }
 
 class SchoolApp extends StatelessWidget {
-  //final UserStatus userState = UserStatus.Unauthenticated;
-  //FirebaseUser firebaseUser;
 
   @override
   Widget build(BuildContext context) {
     return
       MaterialApp(
           title: 'Flutter Demop',
-          theme: ThemeData(primarySwatch: Colors.amber),
+          theme: ThemeData(primarySwatch: MaterialColor(0xFFFA8080, color)),
           home: MultiProvider(
             providers: [
-              ChangeNotifierProvider(
-                  create: (_) => BottomNavigationBarProvider()),
+              ChangeNotifierProvider(create: (_) => BottomNavigationBarProvider()),
               ChangeNotifierProvider(create: (_) => Auth()),
               ChangeNotifierProvider(create: (_) => UserState()),
               ChangeNotifierProvider(create: (_) => User()),
@@ -66,4 +64,3 @@ class _HomePageState extends State<HomePage> {
 
   }
 }
-
