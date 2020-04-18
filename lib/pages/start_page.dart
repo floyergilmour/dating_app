@@ -4,19 +4,15 @@ import 'package:school_app/components/bottomNavigationBarProvider.dart';
 import 'package:school_app/pages/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:school_app/pages/setting.dart';
 
-import 'User/auth.dart';
+import '../User/auth.dart';
 
 class StartPage extends StatelessWidget with ChangeNotifier{
 
   var currentTab = [
-    Scaffold(
-      body: Center(child: Text("Curriculum",style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900),)),
-    ),
-    Scaffold(body: Center(child: Text("Schedule",style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900),)),),
-    Scaffold(body: Center(child: Text("Message",style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900),)),),
+    Setting(),
     Profile(),
-    Scaffold(body: Center(child: Text("Logut",style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900),)),),
   ];
 
   @override
@@ -37,17 +33,10 @@ class StartPage extends StatelessWidget with ChangeNotifier{
         currentIndex: NavbarProvider.currentIndex,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
+
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            title: Text("Curriculum"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            title: Text("Schedule"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            title: Text("Messages"),
+            icon: Icon(Icons.settings),
+            title: Text("Settings"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -60,7 +49,7 @@ class StartPage extends StatelessWidget with ChangeNotifier{
         ],
         onTap: (index) {
 
-          if(index == 4){
+          if(index == 2){
             _auth.signOut();
             _userState.setStatus = UserStatus.UnAuthenticated;
             NavbarProvider.currentIndex = 0;

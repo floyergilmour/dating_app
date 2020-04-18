@@ -8,8 +8,6 @@ class UserState with ChangeNotifier {
   UserStatus get status => _status;
 
   set setStatus(UserStatus s) {
-    if(s == UserStatus.UnAuthenticated){
-    }
     _status = s;
     notifyListeners();
   }
