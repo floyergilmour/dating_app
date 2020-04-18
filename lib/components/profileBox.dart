@@ -51,6 +51,7 @@ class _ProfileBoxState extends State<ProfileBox> {
         )
     ).toList();
 
+
     return tagsList;
   }
 
@@ -58,12 +59,12 @@ class _ProfileBoxState extends State<ProfileBox> {
     return Row(
       children: [
         Text(
-          user.firstName,
+          user.firstName ?? '',
           style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
         ),
         SizedBox(width: 10),
         Text(
-          user.age.toString(),
+          user.age == null ? '' : user.age.toString(),
           style: TextStyle(fontSize: 30),
         )
       ],

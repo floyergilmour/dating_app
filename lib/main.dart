@@ -6,7 +6,7 @@ import 'package:school_app/pages/splash.dart';
 import 'package:school_app/start_page.dart';
 import 'package:school_app/components/bottomNavigationBarProvider.dart';
 import 'package:school_app/User/auth.dart';
-
+import 'package:school_app/components/formState.dart';
 import 'User/user.dart';
 
 void main() {
@@ -30,6 +30,7 @@ class SchoolApp extends StatelessWidget {
               ChangeNotifierProvider(create: (_) => Auth()),
               ChangeNotifierProvider(create: (_) => UserState()),
               ChangeNotifierProvider(create: (_) => User()),
+              ChangeNotifierProvider(create: (_) => FormStatus()),
             ],
             child: HomePage(),
           )

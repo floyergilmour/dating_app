@@ -5,29 +5,32 @@ import 'package:school_app/User/userState.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:school_app/User/auth.dart';
-import 'package:school_app/pages/signUpScreen.dart';
-
-enum FormType {
-  login,
-  register,
-}
+import 'package:school_app/components/formState.dart';
 
 class LoginScreen extends StatelessWidget with ChangeNotifier {
   String _email, _password;
-  FormType _formType = FormType.login;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  //final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
+
     UserState _userState = Provider.of<UserState>(context);
     Auth _auth = Provider.of<Auth>(context);
     User _user = Provider.of<User>(context);
+    FormStatus _formState = Provider.of<FormStatus>(context);
+
+    void _moveToLogin({bool resetForm:true}) {
+      resetForm ? _formKey.currentState.reset() : null;
+      _formState.setFormType = FormType.login;
+    }
+
+    void _moveToRegister() {
+      _formKey.currentState.reset();
+      _formState.setFormType = FormType.register;
+    }
 
     String _pwrValidator(password) {
-      Pattern pattern =
-          r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
+      Pattern pattern = r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
       RegExp regex = new RegExp(pattern);
       if (!regex.hasMatch(password))
         return 'Invalid password';
@@ -35,65 +38,73 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
         return null;
     }
 
-    List<Widget> _buildTexInputs(){
-      return [
-        TextFormField(
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(20.0),
-            hintText: "Email or Phone number",
-            border: InputBorder.none,
-            hintStyle:
-            TextStyle(color: Colors.grey),
-          ),
-          validator: (email) =>
-          EmailValidator.validate(email)
-              ? null
-              : "Invalid email address",
-          onSaved: (email) => _email = email,
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        TextFormField(
-          obscureText: true,
-          decoration: InputDecoration(
-            hintText: "Password",
-            hintStyle:
-            TextStyle(color: Colors.grey),
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.all(20.0),
-          ),
-          onSaved: (password) =>
-          _password = password,
-          validator: _pwrValidator,
-        )
-      ];
+    void _login(e, p) async {
+      String returnedUserId = await _auth.signInWithEmailAndPassword(e, p);
+      if (returnedUserId.isNotEmpty) {
+        _userState.setStatus = UserStatus.Authenticated;
+        await _user.setUserSuccessful(returnedUserId);
+        notifyListeners();
+      }
     }
 
-
-
-    Future<void> _signUp() async {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SignUpScreen()),
-      );
+    Container _buildTexInputs() {
+      return Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                    color: Color.fromRGBO(225, 95, 27, .3),
+                    blurRadius: 20,
+                    offset: Offset(0, 10))
+              ]),
+          child: Column(children: <Widget>[
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(20.0),
+                      hintText: "Email or Phone number",
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
+                    validator: (email) => EmailValidator.validate(email)
+                        ? null
+                        : "Invalid email address",
+                    onSaved: (email) => _email = email.trim(),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.all(20.0),
+                    ),
+                    onSaved: (password) => _password = password,
+                    validator: _pwrValidator,
+                  ),
+                ],
+              ),
+            ),
+          ]));
     }
 
-    void _moveToRegister(){
-      _formType = FormType.register;
-    }
-
-      Future<void> signIn(BuildContext context) async {
-        final formState = _formKey.currentState;
+    Future<void> _validateAndSubmit(BuildContext context) async {
+      final formState = _formKey.currentState;
       if (formState.validate()) {
         formState.save();
         try {
-          String returnedUserId =
-              await _auth.signInWithEmailAndPassword(_email, _password);
-          if (returnedUserId.isNotEmpty) {
-            _userState.setStatus = UserStatus.Authenticated;
-            await _user.setUserSuccessful(returnedUserId);
-            notifyListeners();
+          if (_formState.formType == FormType.login) {
+            _login(_email, _password);
+          } else {
+            String newUserId = await _auth.createUserWithEmailAndPassword(_email, _password);
+            _moveToLogin(resetForm: false);
           }
         } catch (error) {
           Scaffold.of(context).showSnackBar(
@@ -108,15 +119,64 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
       }
     }
 
+    Widget _buildSubmitButtons() {
+      return Column(children: [
+        Builder(
+          builder: (context) => ButtonTheme(
+            height: 50,
+            minWidth: 150,
+            child: RaisedButton(
+              elevation: 1,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50.0),
+              ),
+              onPressed: () => _validateAndSubmit(context),
+              color: Color.fromRGBO(250, 150, 150, 1),
+              textColor: Colors.white,
+              child: _formState.formType == FormType.login
+                  ? Text(
+                      "LOGIN",
+                      style: TextStyle(fontSize: 14),
+                    )
+                  : Text(
+                      "REGISTER",
+                      style: TextStyle(fontSize: 14),
+                    ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 50,
+        ),
+        InkWell(
+          splashColor: Colors.yellow,
+          hoverColor: Colors.red,
+          highlightColor: Colors.blue,
+          child: _formState.formType == FormType.login
+              ? Text("Register new account",
+                  style: TextStyle(color: Colors.grey))
+              : Text("Login", style: TextStyle(color: Colors.grey)),
+          onTap: () {
+            _formState.formType == FormType.login
+                ? _moveToRegister()
+                : _moveToLogin(resetForm: true);
+          },
+        )
+      ]);
+    }
+
     return Scaffold(
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          // https://colorsinspo.com/
-          Color.fromRGBO(250, 128, 128, 1),
-          Color.fromRGBO(150, 247, 210, 1),
-        ])),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            colors: [
+              Color.fromRGBO(250, 128, 128, 1),
+              Color.fromRGBO(150, 247, 210, 1),
+            ],
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -161,75 +221,19 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
                     child: Column(
                       children: <Widget>[
                         SizedBox(
-                          height: 60,
+                          height: 40,
                         ),
-                        Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Color.fromRGBO(225, 95, 27, .3),
-                                      blurRadius: 20,
-                                      offset: Offset(0, 10))
-                                ]),
-                            child: Column(
-                              children: <Widget>[
-                                Form(
-                                    key: _formKey,
-                                    child: Column(children: _buildTexInputs(),
-                                    )),
-                              ],
-                            )),
+                        _buildTexInputs(),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        _buildSubmitButtons(),
                         SizedBox(
                           height: 40,
                         ),
                         Text(
                           "Forgot Password?",
                           style: TextStyle(color: Colors.grey),
-                        ),
-                        SizedBox(
-                          height: 40,
-                        ),
-                        //user.status == UserStatus.Authenticating
-                        //    ? Center(child: CircularProgressIndicator()):
-                        Builder(
-                          builder: (context) => ButtonTheme(
-                            height: 50,
-                            minWidth: 150,
-                            child: RaisedButton(
-                              elevation: 1,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50.0),
-                              ),
-                              onPressed: () => signIn(context),
-                              color: Color.fromRGBO(250, 150, 150, 1),
-                              textColor: Colors.white,
-                              child: Text(
-                                "LOGIN",
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        InkWell(
-                          splashColor: Colors.yellow,
-                          hoverColor: Colors.red,
-                          highlightColor: Colors.blue,
-                          child: Text("Sign Up",
-                              style: TextStyle(color: Colors.grey)),
-                          onTap: _moveToRegister,
-                        ),
-                        SizedBox(
-                          height: 50,
-                        ),
-                        Text("Continue with social media",
-                            style: TextStyle(color: Colors.grey)),
-                        SizedBox(
-                          height: 50,
                         ),
                         //socialMediaButtons()
                       ],
