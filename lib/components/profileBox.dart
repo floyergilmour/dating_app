@@ -25,7 +25,7 @@ class _ProfileBoxState extends State<ProfileBox> {
           SizedBox(height: 13,),
           Row(children: _buildTags(_user.interests, Color.fromRGBO(150, 247, 210, 0.8)),),
           SizedBox(height: 13,),
-          Text(_user.description,),
+          Text(_user.description ?? '',),
 
         ],
       ),
@@ -34,25 +34,36 @@ class _ProfileBoxState extends State<ProfileBox> {
 
   List<Row> _buildTags(List<String> tags, Color c){
 
-    var tagsList = tags.map((element) =>
-        Row(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.center,
-              decoration: new BoxDecoration(
-                color: c,
-                borderRadius: new BorderRadius.all(Radius.circular(40.0)),
+    if (tags != null){
+      print("this is _buildTags");
+      print(tags);
+      var tagsList = tags.map((element) =>
+          Row(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.center,
+                decoration: new BoxDecoration(
+                  color: c,
+                  borderRadius: new BorderRadius.all(Radius.circular(40.0)),
+                ),
+                padding: EdgeInsets.all(7),
+                child: Text(element.capitalize(), style: TextStyle(fontWeight: FontWeight.bold)),
               ),
-              padding: EdgeInsets.all(7),
-              child: Text(element.capitalize(), style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(width: 3,)
-          ],
-        )
-    ).toList();
+              SizedBox(width: 3,)
+            ],
+          )
+      ).toList();
+      return tagsList;
+    }
+    else{
+      print("this is _buildTags case null");
+      print(tags);
+      return [Row()];
+    }
 
 
-    return tagsList;
+
+
   }
 
   Row _profileBoxTitle(User user) {

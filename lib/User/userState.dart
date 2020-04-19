@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 enum UserStatus { Uninitialized, Authenticated, UnAuthenticated }
 
 class UserState with ChangeNotifier {
-  UserStatus _status = UserStatus.Uninitialized;
+  UserStatus _status = UserStatus.UnAuthenticated;
 
   UserStatus get status => _status;
 

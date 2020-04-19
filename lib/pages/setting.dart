@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:school_app/User/user.dart';
 import 'package:school_app/User/userState.dart';
 import 'package:provider/provider.dart';
+import 'package:school_app/pages/profile.dart';
 
 class Setting extends StatelessWidget {
   bool _isSelectedPushNotification = true;
@@ -8,6 +10,7 @@ class Setting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User _user = Provider.of<User>(context, listen: true);
     return Scaffold(
       body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(8, 70, 8, 10),
@@ -21,10 +24,18 @@ class Setting extends StatelessWidget {
               ),
               elevation: 10,
               child: ListTile(
-                onTap: () {
-                  //Navigator.of(context).push(_createRoute());
+                onTap: () =>
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ChangeNotifierProvider<User>.value(
+                          //create: (_) => User(),
+                            value: _user,
+                            child: Scaffold(appBar: AppBar(),body: Profile(),)
+                            //Scaffold(appBar: AppBar(),body: Profile(),),
 
-                  },
+                        ),
+                      ),
+                    ),
                 leading: CircleAvatar(
                   backgroundImage: AssetImage(
                       "/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
@@ -94,7 +105,4 @@ class Setting extends StatelessWidget {
       color: Colors.grey.shade400,
     );
   }
-
-
-
 }
