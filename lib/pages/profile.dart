@@ -6,6 +6,7 @@ import 'package:school_app/components/profileBox.dart';
 
 class Profile extends StatelessWidget {
 
+
   @override
   Widget build(BuildContext context) {
 
