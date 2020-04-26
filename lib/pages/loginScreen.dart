@@ -7,9 +7,18 @@ import 'package:flutter/foundation.dart';
 import 'package:school_app/services/auth.dart';
 import 'package:school_app/components/formState.dart';
 
-class LoginScreen extends StatelessWidget with ChangeNotifier {
+class LoginScreen extends StatefulWidget with ChangeNotifier {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   String _email, _password;
+  Gender _sexGroupValue = Gender.missing;
+  bool prefersMales = false;
+  bool prefersFemales = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,61 +47,141 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
         return null;
     }
 
+    Widget _checkbox(String title, bool boolValue) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(title),
+          Checkbox(
+            value: boolValue,
+            onChanged: (bool value) {
+              setState(() {
+                switch (title) {
+                  case "Males":
+                    prefersMales = value;
+                    break;
+                  case "Females":
+                    prefersFemales = value;
+                    break;
+                }
+              });
+            },
+          )
+        ],
+      );
+    }
+    Widget _radio(String title, dynamic value, dynamic groupValue) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(title),
+          Radio(
+            value: value,
+            groupValue: _sexGroupValue,
+            onChanged: (value) {
+              setState((){
+                _sexGroupValue = value;
+              });
+              print(value);
+            },
+          )
+        ],
+      );
+    }
+
+
     void _login(e, p) async {
       String returnedUserId = await _auth.signInWithEmailAndPassword(e, p);
       if (returnedUserId.isNotEmpty) {
         _userState.setStatus = UserStatus.Authenticated;
         await _user.setUserSuccessful(returnedUserId);
-        notifyListeners();
+        //notifyListeners();
       }
     }
 
-    Container _buildTexInputs() {
-      return Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                    color: Color.fromRGBO(225, 95, 27, .3),
-                    blurRadius: 20,
-                    offset: Offset(0, 10))
-              ]),
-          child: Column(children: <Widget>[
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(20.0),
-                      hintText: "Email or Phone number",
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.grey),
-                    ),
-                    validator: (email) => EmailValidator.validate(email)
-                        ? null
-                        : "Invalid email address",
-                    onSaved: (email) => _email = email.trim(),
+    Column _buildTexInputs() {
+      return Column(
+        children: <Widget>[
+          Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Color.fromRGBO(225, 95, 27, .3),
+                        blurRadius: 20,
+                        offset: Offset(0, 10))
+                  ]),
+              child: Column(children: <Widget>[
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(20.0),
+                          hintText: "Email or Phone number",
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(color: Colors.grey),
+                        ),
+                        validator: (email) => EmailValidator.validate(email)
+                            ? null
+                            : "Invalid email address",
+                        onSaved: (email) => _email = email.trim(),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.all(20.0),
+                        ),
+                        onSaved: (password) => _password = password,
+                        validator: _pwrValidator,
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "Password",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(20.0),
-                    ),
-                    onSaved: (password) => _password = password,
-                    validator: _pwrValidator,
-                  ),
-                ],
+                ),
+              ],
               ),
+          ),
+          SizedBox(height: 20,),
+          Container(
+            padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                      color: Color.fromRGBO(225, 95, 27, .3),
+                      blurRadius: 20,
+                      offset: Offset(0, 10))
+                ]),
+            child: Column(
+              children: [
+                Text("I am a", style: TextStyle(fontWeight: FontWeight.bold),),
+                ButtonBar(
+                  children: [
+                    _radio("Male", Gender.male, _sexGroupValue),
+                    _radio("Female", Gender.female, _sexGroupValue),
+                  ],
+                ),
+                Text("I would like to meet", style: TextStyle(fontWeight: FontWeight.bold),),
+                ButtonBar(
+                  children: [
+                    _checkbox("Males", prefersMales),
+                    _checkbox("Females", prefersFemales)
+                  ],
+                )
+              ],
             ),
-          ]));
+          )
+        ],
+      );
     }
 
     Future<void> _validateAndSubmit(BuildContext context) async {
@@ -131,7 +220,7 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
                 borderRadius: BorderRadius.circular(50.0),
               ),
               onPressed: () => _validateAndSubmit(context),
-              color: Color.fromRGBO(250, 150, 150, 1),
+              color: _formState.formType == FormType.register ? Color.fromRGBO(250, 150, 150, 1) : Color.fromRGBO(150, 247, 210, 1),
               textColor: Colors.white,
               child: _formState.formType == FormType.login
                   ? Text(
@@ -171,9 +260,13 @@ class LoginScreen extends StatelessWidget with ChangeNotifier {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
-            colors: [
+            colors: _formState.formType == FormType.register ? [
               Color.fromRGBO(250, 128, 128, 1),
               Color.fromRGBO(150, 247, 210, 1),
+            ] :
+            [
+              Color.fromRGBO(150, 247, 210, 1),
+              Color.fromRGBO(250, 128, 128, 1),
             ],
           ),
         ),
