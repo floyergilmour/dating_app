@@ -9,9 +9,15 @@ class ProfileBox extends StatefulWidget {
 }
 
 class _ProfileBoxState extends State<ProfileBox> {
+  final TextEditingController _nameController = new TextEditingController();
+  final TextEditingController _ageController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     User _user = Provider.of<User>(context, listen: true);
+    _nameController.text = _user.firstName;
+    _ageController.text = _user.age.toString();
+
     return Container(
       padding: EdgeInsets.all(20.0),
       child: Column(
@@ -26,7 +32,6 @@ class _ProfileBoxState extends State<ProfileBox> {
           Row(children: _buildTags(_user.interests, Color.fromRGBO(150, 247, 210, 0.8)),),
           SizedBox(height: 13,),
           Text(_user.description ?? '',),
-
         ],
       ),
     );
@@ -60,24 +65,32 @@ class _ProfileBoxState extends State<ProfileBox> {
       print(tags);
       return [Row()];
     }
-
-
-
-
   }
 
   Row _profileBoxTitle(User user) {
     return Row(
       children: [
-        Text(
-          user.firstName ?? '',
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
+        Flexible(
+          flex: 2,
+          child: new TextField(
+            controller: _nameController,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+            ),
+            style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
+          ),
         ),
         SizedBox(width: 10),
-        Text(
-          user.age == null ? '' : user.age.toString(),
-          style: TextStyle(fontSize: 30),
-        )
+        Flexible(
+          flex: 2,
+          child: new TextField(
+            controller: _ageController,
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+            ),
+            style: TextStyle(fontSize: 30),
+          ),
+        ),
       ],
     );
   }

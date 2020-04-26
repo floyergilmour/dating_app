@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/User/userState.dart';
 import 'package:school_app/components/bottomNavigationBarProvider.dart';
+import 'package:school_app/pages/profileSettingsPage.dart';
 import 'package:school_app/pages/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:school_app/pages/setting.dart';
 
-import '../User/auth.dart';
+import 'package:school_app/services/auth.dart';
 
 class StartPage extends StatelessWidget with ChangeNotifier{
 
   var currentTab = [
     Setting(),
     Profile(),
+    ProfileSettingsPage()
   ];
 
   @override
@@ -43,13 +45,17 @@ class StartPage extends StatelessWidget with ChangeNotifier{
             title: Text("Profile"),
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.edit),
+            title: Text("Edit profile"),
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.exit_to_app),
             title: Text("Logout"),
           )
         ],
         onTap: (index) {
 
-          if(index == 2){
+          if(index == 3){
             _auth.signOut();
             _userState.setStatus = UserStatus.UnAuthenticated;
             NavbarProvider.currentIndex = 0;

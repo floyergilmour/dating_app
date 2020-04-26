@@ -4,7 +4,7 @@ import 'package:school_app/User/user.dart';
 import 'package:school_app/User/userState.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
-import 'package:school_app/User/auth.dart';
+import 'package:school_app/services/auth.dart';
 import 'package:school_app/components/formState.dart';
 
 class LoginScreen extends StatelessWidget with ChangeNotifier {
