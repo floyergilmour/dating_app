@@ -19,12 +19,14 @@ class Profile extends StatelessWidget {
             delegate: _SliverAppBarDelegate(),
           ),
           SliverList(
-            delegate: SliverChildListDelegate([
-              SizedBox(
-                height: 10,
-              ),
-              ProfileBox(),
-            ]),
+            delegate: SliverChildListDelegate(
+                [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  ProfileBox(),
+                ]
+            ),
           ),
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -46,21 +48,6 @@ class Profile extends StatelessWidget {
       ),
     );
   }
-}
-
-Row cell(String titel, String content) {
-  Text _title = Text(
-    titel.capitalize(),
-    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-  );
-  Text _content = Text(
-    content,
-    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-  );
-  Row result = Row(
-    children: [_title, _content],
-  );
-  return result;
 }
 
 class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
@@ -85,7 +72,6 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
       child: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          //Container(color: Color.fromRGBO(250, 128, 128, 1)),
           Opacity(
             opacity: animationVal,
             child: Image(
@@ -104,32 +90,6 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                     flex: (animationVal * 100).toInt(),
                     child: Container(),
                   ),
-                  Column(
-                    children: <Widget>[
-                      /* Text('${_user.firstName}\'s Profile',
-                          style: TextStyle(
-                              fontSize: 36,
-                              fontWeight: FontWeight.w900,
-                              color: Colors.white)),
-
-                      */
-                      SizedBox(
-                        height: 30,
-                      ),
-                      //CircleAvatar(
-                      //  radius: 90.0,
-                      //  backgroundImage: AssetImage("/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
-                      //  backgroundColor: Colors.transparent,
-                      //),
-                      SizedBox(
-                        height: 50,
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    flex: 100,
-                    child: Container(),
-                  )
                 ],
               ),
             ),

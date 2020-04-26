@@ -16,84 +16,100 @@ class Setting extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(8, 70, 8, 10),
         child: Column(
           children: <Widget>[
-            Text("Settings", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
-            SizedBox(height: 40,),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              elevation: 10,
-              child: ListTile(
-                onTap: () =>
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ChangeNotifierProvider<User>.value(
-                          //create: (_) => User(),
-                            value: _user,
-                            child: Scaffold(appBar: AppBar(),body: Profile(),)
-                            //Scaffold(appBar: AppBar(),body: Profile(),),
-
-                        ),
-                      ),
-                    ),
-                leading: CircleAvatar(
-                  backgroundImage: AssetImage(
-                      "/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
-                ),
-                title: Text("Donny Ho"),
-                trailing: Icon(Icons.keyboard_arrow_right),
-              ),
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              elevation: 10,
-              child: Column(
-                children: <Widget>[
-                  Column(
-                    children: [
-                      ListTile(
-                        onTap: (){},
-                        leading: Icon(Icons.lock),
-                        title: Text("Change Password"),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                      ),
-                      _buildDivider(1),
-                      ListTile(
-                        leading: Icon(Icons.translate),
-                        title: Text("Change Language (coming soon)"),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                      ),
-                      _buildDivider(1),
-                      ListTile(
-                        leading: Icon(Icons.location_on),
-                        title: Text("Change Location (coming soon)"),
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                      ),
-                    ],
+          Text("Settings",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
+        SizedBox(height: 40,),
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          elevation: 10,
+          child: ListTile(
+            onTap: () =>
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) =>
+                      ChangeNotifierProvider<User>.value(
+                        value: _user,
+                        child: Scaffold(appBar: AppBar(
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          title: Text(
+                              _user.firstName.toString() + '\'s profile'),
+                          actions: <Widget>[
+                            IconButton(
+                              icon: Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                // do something
+                              },
+                            )
+                          ],
+                        ),body: Profile(),)
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20,),
-            Text("Other Settings", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
-            SwitchListTile(
-              activeColor: Color.fromRGBO(250, 128, 128, 1),
-              contentPadding: EdgeInsets.all(0),
-              value: _isSelectedPushNotification,
-              title: Text("Push notifications"),
-              onChanged: (value){},
-            ),
-            SwitchListTile(
-              activeColor: Color.fromRGBO(250, 128, 128, 1),
-              contentPadding: EdgeInsets.all(0),
-              value: _isSelectedHideMyProfile,
-              title: Text("Hide my profile"),
-              onChanged: (value){},
+                ),
+          ),
+          leading: CircleAvatar(
+            backgroundImage: AssetImage(
+                "/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
+          ),
+          title: Text(_user.getFullName()),
+          trailing: Icon(Icons.keyboard_arrow_right),
+        ),
+      ),
+      Card(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10)),
+        elevation: 10,
+        child: Column(
+          children: <Widget>[
+            Column(
+              children: [
+                ListTile(
+                  onTap: () {},
+                  leading: Icon(Icons.lock),
+                  title: Text("Change Password"),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                ),
+                _buildDivider(1),
+                ListTile(
+                  leading: Icon(Icons.translate),
+                  title: Text("Change Language (coming soon)"),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                ),
+                _buildDivider(1),
+                ListTile(
+                  leading: Icon(Icons.location_on),
+                  title: Text("Change Location (coming soon)"),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                ),
+              ],
             ),
           ],
         ),
       ),
+      const SizedBox(height: 20,),
+      Text("Other Settings",
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
+      SwitchListTile(
+        activeColor: Color.fromRGBO(250, 128, 128, 1),
+        contentPadding: EdgeInsets.all(0),
+        value: _isSelectedPushNotification,
+        title: Text("Push notifications"),
+        onChanged: (value) {},
+      ),
+      SwitchListTile(
+        activeColor: Color.fromRGBO(250, 128, 128, 1),
+        contentPadding: EdgeInsets.all(0),
+        value: _isSelectedHideMyProfile,
+        title: Text("Hide my profile"),
+        onChanged: (value) {},
+      ),
+      ],
+    ),)
+    ,
     );
   }
 
