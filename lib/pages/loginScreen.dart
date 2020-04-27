@@ -15,12 +15,11 @@ class LoginScreen extends StatefulWidget with ChangeNotifier {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String _email, _password;
+  String _email, _password, _name;
   Gender _sexGroupValue = Gender.missing;
-  bool _prefersMales = false;
-  bool _prefersFemales = false;
+  bool _prefersMales  = false, _prefersFemales = false;
+  int _age;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     Container _signupPreferences() {
       return Container(
-        padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
+        padding: EdgeInsets.fromLTRB(20, 20, 5, 5),
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -106,18 +105,34 @@ class _LoginScreenState extends State<LoginScreen> {
             ]),
         child: Column(
           children: [
-            Text("I am a", style: TextStyle(fontWeight: FontWeight.bold),),
-            ButtonBar(
+            Row(
               children: [
-                _radio("Male", Gender.male, _sexGroupValue),
-                _radio("Female", Gender.female, _sexGroupValue),
-              ],
+                Expanded(
+                    flex: 1,
+                    child: Text("I am a", style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                ),
+                ButtonBar(
+                  alignment: MainAxisAlignment.center,
+                  children: [
+                    _radio("Male", Gender.male, _sexGroupValue),
+                    _radio("Female", Gender.female, _sexGroupValue),
+                  ],
+                ),
+              ]
             ),
-            Text("I would like to meet", style: TextStyle(fontWeight: FontWeight.bold),),
-            ButtonBar(
+            Row(
               children: [
-                _checkbox("Males", _prefersMales),
-                _checkbox("Females", _prefersFemales)
+                Expanded(
+                    flex: 1,
+                    child: Text("I would like to meet", style: TextStyle(fontWeight: FontWeight.bold),)),
+                ButtonBar(
+                  alignment: MainAxisAlignment.center,
+                  children: [
+                    _checkbox("Males", _prefersMales),
+                    _checkbox("Females", _prefersFemales)
+                  ],
+                )
               ],
             )
           ],
@@ -132,6 +147,42 @@ class _LoginScreenState extends State<LoginScreen> {
         await _user.setUserSuccessful(returnedUserId);
         //notifyListeners();
       }
+    }
+
+    List<Widget> _buildPersonalDetailsInput() {
+      return _formState.formType == FormType.login ? []:
+       [
+        TextFormField(
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(20.0),
+            hintText: "Name",
+            border: InputBorder.none,
+            hintStyle: TextStyle(color: Colors.grey),
+          ),
+          validator: (name) {
+            if (name.isEmpty) {
+              return 'Please enter a name';
+            }
+            return null;
+          },
+          onSaved: (name) => _name = name.trim(),
+        ),
+        TextFormField(
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(20.0),
+            hintText: "Age",
+            border: InputBorder.none,
+            hintStyle: TextStyle(color: Colors.grey),
+          ),
+          validator: (age) {
+            if (int.parse(age) is int && int.parse(age) >= 18 && int.parse(age) < 120) {
+              return null;
+            }
+            return 'Please enter a your age, you must be over 18';
+          },
+          onSaved: (age) => _age = int.parse(age),
+        ),
+      ];
     }
 
     Column _buildTexInputs() {
@@ -151,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Form(
                   key: _formKey,
                   child: Column(
-                    children: [
+                    children: _buildPersonalDetailsInput() + [
                       TextFormField(
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(20.0),
@@ -201,8 +252,19 @@ class _LoginScreenState extends State<LoginScreen> {
             String newUserId = await _auth.createUserWithEmailAndPassword(_email, _password);
 
             var gender = _sexGroupValue.toShortString();
-            var genderPreferences = [_prefersMales? Gender.male.toShortString():null, _prefersFemales? Gender.female.toShortString():null];
-            await _auth.updateValues(newUserId, {"gender": gender, "gender_preferences" : genderPreferences });
+            var genderPreferences = [
+              _prefersMales? Gender.male.toShortString():null,
+              _prefersFemales? Gender.female.toShortString():null
+            ].where((x) => x != null).toList();
+
+            _auth.updateValues(
+                newUserId,
+                {
+                  "name": _name,
+                  "age": _age,
+                  "gender": gender,
+                  "gender_preferences" : genderPreferences
+                });
             _moveToLogin(resetForm: false);
           }
         } catch (error) {
@@ -292,7 +354,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    _formState.formType == FormType.login ? "Hello, welcome back!" : "Create new account",
+                    _formState.formType == FormType.login ? "Hello, welcome back!" : "Signup",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 40,
@@ -315,7 +377,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(60),
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
                   ),
                 ),
                 child: SingleChildScrollView(
