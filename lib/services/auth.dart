@@ -19,6 +19,7 @@ class Auth extends ChangeNotifier {
     final AuthResult authResult = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     Map<String, String> userEmail = {"email":authResult.user.email.toString()};
     await DatabaseService(userId: authResult.user.uid.toString()).setUserData(userEmail);
+
     notifyListeners();
     return authResult.user.uid.toString();
   }
@@ -35,22 +36,13 @@ class Auth extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _updateValue(String value, String field) async {
-    String _userId = _firebaseAuth
-        .currentUser()
-        .then((value) => value.uid.toString())
-        .catchError((e) => print(e))
-        .toString();
-
-    Firestore()
-        .runTransaction(
-          (Transaction transaction) {
-            Firestore
-                .instance
-                .document(_userId)
-                .updateData({field: value});
-            },
-    );
+  void overwriteValues(String userId, Map<String, dynamic> mapValues) async {
+    print("overwriteValues with" + mapValues.toString());
+    await DatabaseService(userId: userId).setUserData(mapValues);
   }
 
+  void updateValues(String userId, Map<String, dynamic> mapValues) async {
+    print("updateUserData with" + mapValues.toString());
+    await DatabaseService(userId: userId).updateUserData(mapValues);
+  }
 }
