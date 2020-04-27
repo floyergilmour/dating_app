@@ -13,7 +13,7 @@ class ProfileSettingsPage extends StatefulWidget {
 }
 
 class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
-  final TextEditingController _firstNameController = new TextEditingController();
+  final TextEditingController _nameController = new TextEditingController();
   final TextEditingController _ageController = new TextEditingController();
   final TextEditingController _descriptionController = new TextEditingController();
   final TextEditingController _titleController = new TextEditingController();
@@ -36,7 +36,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   void dispose() {
     // Clean up the controller when the widget is removed from the
     // widget tree.
-    _firstNameController.dispose();
+    _nameController.dispose();
     _ageController.dispose();
     _descriptionController.dispose();
     _titleController.dispose();
@@ -58,7 +58,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
     User _user = Provider.of<User>(context);
     //DatabaseService _databaseUser = Provider.of<DatabaseService>(context);
 
-    _firstNameController.text = _user.firstName;
+    _nameController.text = _user.name;
     _ageController.text = _user.age.toString();
     _descriptionController.text = _user.description;
     _titleController.text = _user.title;
@@ -97,13 +97,13 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                     child: Column(
                       children: <Widget>[
                         new TextField(
-                          controller: _firstNameController,
+                          controller: _nameController,
                           onSubmitted: (value) {
-                            updateProfileInformation2(_user.userId, {"first_name": value.toString()},_firstNameController);
+                            updateProfileInformation2(_user.userId, {"name": value.toString()},_nameController);
                             _user.setFirstName = value;
                             },
                           decoration: const InputDecoration(
-                            hintText: "First name",
+                            hintText: "Name",
                             contentPadding: const EdgeInsets.fromLTRB(10, 5, 5, 5),
                             border: InputBorder.none,
                           ),

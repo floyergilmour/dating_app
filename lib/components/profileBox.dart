@@ -15,7 +15,7 @@ class _ProfileBoxState extends State<ProfileBox> {
   @override
   Widget build(BuildContext context) {
     User _user = Provider.of<User>(context, listen: true);
-    _nameController.text = _user.firstName;
+    _nameController.text = _user.name;
     _ageController.text = _user.age.toString();
 
     return Container(

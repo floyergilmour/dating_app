@@ -12,7 +12,7 @@ enum Product { premium, free }
 class User extends ChangeNotifier{
   Firestore db = Firestore.instance;
 
-  String _userId, _first_name, _last_name, _school, _email, _description, _employer, _title;
+  String _userId, _first_name, _last_name, _school, _email, _description, _employer, _title, _name;
   List<String> _ideologies, _interests, _religions;
   UserType _userType;
   Product _product;
@@ -22,6 +22,7 @@ class User extends ChangeNotifier{
 
   String get userId => _userId;
   String get firstName => _first_name;
+  String get name => _name;
   String get lastName => _last_name;
   String get school => _school;
   String get email => _email;
@@ -43,6 +44,11 @@ class User extends ChangeNotifier{
   }
   set setLastName(String value) {
     _last_name = value;
+    notifyListeners();
+  }
+
+  set setName(String value) {
+    _name = value;
     notifyListeners();
   }
 
@@ -145,7 +151,6 @@ class User extends ChangeNotifier{
           .document(userId)
           .get());
       print(userResult.data);
-      //DateTime dob = userResult.data["dateOfBirth"].toDate();
 
       Iterable ideologiesRaw = userResult.data["ideologies"] == null ? [] : userResult.data["ideologies"];
       Iterable interestsRaw = userResult.data["interests"] == null ? [] : userResult.data["interests"];
@@ -154,6 +159,7 @@ class User extends ChangeNotifier{
       _userId = userId;
       _first_name = userResult.data["first_name"];
       _last_name = userResult.data["last_name"];
+      _name = userResult.data["name"];
       _school = userResult.data["school"];
       _email = userResult.data["email"];
       _userType = stringToUserType(userResult.data["user_type"]);
@@ -168,10 +174,6 @@ class User extends ChangeNotifier{
       _title = userResult.data["title"];
       _employer = userResult.data["employer"];
 
-      var datum = "2000-01-01";
-
-      print(DateTime.parse(datum));
-
       notifyListeners();
       return true;
     }
@@ -183,6 +185,7 @@ class User extends ChangeNotifier{
       _userId = userId;
       _first_name = null;
       _last_name = null;
+      _name = null;
       _school = null;
       _email =null;
       _userType =UserType.admin;

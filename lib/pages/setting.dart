@@ -3,6 +3,7 @@ import 'package:school_app/User/user.dart';
 import 'package:school_app/User/userState.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/pages/profile.dart';
+import 'package:school_app/pages/profileSettingsPage.dart';
 
 class Setting extends StatelessWidget {
   bool _isSelectedPushNotification = true;
@@ -35,19 +36,19 @@ class Setting extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                           elevation: 0,
                           title: Text(
-                              _user.firstName.toString() + '\'s profile'),
+                              _user.name + '\'s profile'),
                           actions: <Widget>[
                             IconButton(
                               icon: Icon(
                                 Icons.edit,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                               onPressed: () {
                                 // do something
                               },
                             )
                           ],
-                        ),body: Profile(),)
+                        ),body: ProfileSettingsPage(),)
                   ),
                 ),
           ),
@@ -55,7 +56,7 @@ class Setting extends StatelessWidget {
             backgroundImage: AssetImage(
                 "/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
           ),
-          title: Text(_user.getFullName()),
+          title: Text(_user.name),
           trailing: Icon(Icons.keyboard_arrow_right),
         ),
       ),

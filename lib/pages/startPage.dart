@@ -14,7 +14,7 @@ class StartPage extends StatelessWidget with ChangeNotifier{
   var currentTab = [
     Setting(),
     Profile(),
-    ProfileSettingsPage()
+    //ProfileSettingsPage()
   ];
 
   @override
@@ -25,12 +25,6 @@ class StartPage extends StatelessWidget with ChangeNotifier{
 
     return Scaffold(
       body: currentTab[NavbarProvider.currentIndex],
-      //drawer: hamburgerMenu(),
-      //appBar: MainAppBar(
-      //    appBarTitle: "Welcome Donny"+'${NavbarProvider.currentIndex.toString()}',
-      //    appBarHeight: height,
-      //    imageUrl:
-      //        "/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: NavbarProvider.currentIndex,
         type: BottomNavigationBarType.fixed,
@@ -45,17 +39,13 @@ class StartPage extends StatelessWidget with ChangeNotifier{
             title: Text("Profile"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.edit),
-            title: Text("Edit profile"),
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.exit_to_app),
             title: Text("Logout"),
           )
         ],
         onTap: (index) {
 
-          if(index == 3){
+          if(index == 2){
             _auth.signOut();
             _userState.setStatus = UserStatus.UnAuthenticated;
             NavbarProvider.currentIndex = 0;
