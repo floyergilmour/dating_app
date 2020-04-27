@@ -98,7 +98,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                       children: <Widget>[
                         new TextField(
                           controller: _firstNameController,
-                          onChanged: (value) {
+                          onSubmitted: (value) {
                             updateProfileInformation2(_user.userId, {"first_name": value.toString()},_firstNameController);
                             _user.setFirstName = value;
                             },
@@ -111,7 +111,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                         ),
                         new TextField(
                           controller: _ageController,
-                          onChanged: (value) {
+                          onSubmitted: (value) {
                             updateProfileInformation(_user.userId, {"age": int.parse(value)});
                             _user.setAge = int.parse(value);
                         },
@@ -125,7 +125,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                         ),
                         new TextField(
                           controller: _employerController,
-                          onChanged: (value) {
+                          onSubmitted: (value) {
                             updateProfileInformation(_user.userId, {"employer": value});
                             _user.setEmployer = value;
                           },
@@ -138,7 +138,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                         ),
                         new TextField(
                           controller: _titleController,
-                          onChanged: (value) {
+                          onSubmitted: (value) {
                             updateProfileInformation(_user.userId, {"title": value});
                             _user.setTitle = value;
                           },
@@ -171,7 +171,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                       children: <Widget>[
                         new TextField(
                           controller: _descriptionController,
-                          onChanged: (value) {
+                          onSubmitted: (value) {
                             updateProfileInformation(_user.userId, {"description": value});
                             _user.setDescription = value;
                           },

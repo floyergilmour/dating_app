@@ -6,8 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:school_app/services/auth.dart';
 import 'package:school_app/components/formState.dart';
+import 'package:school_app/extensions/extensions.dart';
 
 class LoginScreen extends StatefulWidget with ChangeNotifier {
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -15,8 +17,8 @@ class LoginScreen extends StatefulWidget with ChangeNotifier {
 class _LoginScreenState extends State<LoginScreen> {
   String _email, _password;
   Gender _sexGroupValue = Gender.missing;
-  bool prefersMales = false;
-  bool prefersFemales = false;
+  bool _prefersMales = false;
+  bool _prefersFemales = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
@@ -58,10 +60,10 @@ class _LoginScreenState extends State<LoginScreen> {
               setState(() {
                 switch (title) {
                   case "Males":
-                    prefersMales = value;
+                    _prefersMales = value;
                     break;
                   case "Females":
-                    prefersFemales = value;
+                    _prefersFemales = value;
                     break;
                 }
               });
@@ -70,6 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       );
     }
+
     Widget _radio(String title, dynamic value, dynamic groupValue) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -89,6 +92,38 @@ class _LoginScreenState extends State<LoginScreen> {
       );
     }
 
+    Container _signupPreferences() {
+      return Container(
+        padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                  color: Color.fromRGBO(225, 95, 27, .3),
+                  blurRadius: 20,
+                  offset: Offset(0, 10))
+            ]),
+        child: Column(
+          children: [
+            Text("I am a", style: TextStyle(fontWeight: FontWeight.bold),),
+            ButtonBar(
+              children: [
+                _radio("Male", Gender.male, _sexGroupValue),
+                _radio("Female", Gender.female, _sexGroupValue),
+              ],
+            ),
+            Text("I would like to meet", style: TextStyle(fontWeight: FontWeight.bold),),
+            ButtonBar(
+              children: [
+                _checkbox("Males", _prefersMales),
+                _checkbox("Females", _prefersFemales)
+              ],
+            )
+          ],
+        ),
+      );
+    }
 
     void _login(e, p) async {
       String returnedUserId = await _auth.signInWithEmailAndPassword(e, p);
@@ -150,36 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
           ),
           SizedBox(height: 20,),
-          Container(
-            padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                      color: Color.fromRGBO(225, 95, 27, .3),
-                      blurRadius: 20,
-                      offset: Offset(0, 10))
-                ]),
-            child: Column(
-              children: [
-                Text("I am a", style: TextStyle(fontWeight: FontWeight.bold),),
-                ButtonBar(
-                  children: [
-                    _radio("Male", Gender.male, _sexGroupValue),
-                    _radio("Female", Gender.female, _sexGroupValue),
-                  ],
-                ),
-                Text("I would like to meet", style: TextStyle(fontWeight: FontWeight.bold),),
-                ButtonBar(
-                  children: [
-                    _checkbox("Males", prefersMales),
-                    _checkbox("Females", prefersFemales)
-                  ],
-                )
-              ],
-            ),
-          )
+          _formState.formType == FormType.login? Column() :_signupPreferences()
         ],
       );
     }
@@ -193,6 +199,10 @@ class _LoginScreenState extends State<LoginScreen> {
             _login(_email, _password);
           } else {
             String newUserId = await _auth.createUserWithEmailAndPassword(_email, _password);
+
+            var gender = _sexGroupValue.toShortString();
+            var genderPreferences = [_prefersMales? Gender.male.toShortString():null, _prefersFemales? Gender.female.toShortString():null];
+            await _auth.updateValues(newUserId, {"gender": gender, "gender_preferences" : genderPreferences });
             _moveToLogin(resetForm: false);
           }
         } catch (error) {
@@ -244,7 +254,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: _formState.formType == FormType.login
               ? Text("Register new account",
                   style: TextStyle(color: Colors.grey))
-              : Text("Login", style: TextStyle(color: Colors.grey)),
+              : Text("Login to existing account", style: TextStyle(color: Colors.grey)),
           onTap: () {
             _formState.formType == FormType.login
                 ? _moveToRegister()
@@ -282,7 +292,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Hello, welcome back!",
+                    _formState.formType == FormType.login ? "Hello, welcome back!" : "Create new account",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 40,
