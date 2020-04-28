@@ -23,6 +23,7 @@ class _ProfileBoxState extends State<ProfileBox> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //_buildStuff(),
           _profileBoxTitle(_user),
           SizedBox(height: 13,),
           Row(children: _buildTags(_user.ideologies, Color.fromRGBO(250, 128, 128, 0.8)),),
