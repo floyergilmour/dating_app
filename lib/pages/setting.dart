@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:school_app/User/user.dart';
 import 'package:school_app/User/userState.dart';
 import 'package:provider/provider.dart';
+import 'package:school_app/components/buildDivider.dart';
 import 'package:school_app/pages/profile.dart';
 import 'package:school_app/pages/profileSettingsPage.dart';
 
@@ -74,13 +75,13 @@ class Setting extends StatelessWidget {
                   title: Text("Change Password"),
                   trailing: Icon(Icons.keyboard_arrow_right),
                 ),
-                _buildDivider(1),
+                BuildDivider(),
                 ListTile(
                   leading: Icon(Icons.translate),
                   title: Text("Change Language (coming soon)"),
                   trailing: Icon(Icons.keyboard_arrow_right),
                 ),
-                _buildDivider(1),
+                BuildDivider(),
                 ListTile(
                   leading: Icon(Icons.location_on),
                   title: Text("Change Location (coming soon)"),
@@ -91,7 +92,7 @@ class Setting extends StatelessWidget {
           ],
         ),
       ),
-      const SizedBox(height: 20,),
+      const SizedBox(height: 40,),
       Text("Other Settings",
         style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),),
       SwitchListTile(

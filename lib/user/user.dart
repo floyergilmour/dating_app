@@ -83,6 +83,10 @@ class User extends ChangeNotifier{
     notifyListeners();
   }
 
+  set setIdeologies(List value) {
+    _ideologies = value;
+    notifyListeners();
+  }
 
   //int get age {
   //
@@ -145,6 +149,7 @@ class User extends ChangeNotifier{
   }
 
   Future<bool> setUserSuccessful(String userId) async {
+    print(userId);
     try{
       DocumentSnapshot userResult = (await db
           .collection('user')
@@ -156,24 +161,41 @@ class User extends ChangeNotifier{
       Iterable interestsRaw = userResult.data["interests"] == null ? [] : userResult.data["interests"];
       Iterable religionsRaw = userResult.data["religions"] == null ? [] : userResult.data["religions"];
 
-      _userId = userId;
-      _first_name = userResult.data["first_name"];
-      _last_name = userResult.data["last_name"];
-      _name = userResult.data["name"];
-      _school = userResult.data["school"];
-      _email = userResult.data["email"];
-      _userType = stringToUserType(userResult.data["user_type"]);
-      _product = stringToProduct(userResult.data["product"]);
-      //_dateOfBirth = DateTime(dob.year, dob.month, dob.day);
-      _age = userResult.data["age"];
-      _gender = stringToGender(userResult.data["gender"]);
-      _description = userResult.data["description"];
-      _ideologies = List.from(ideologiesRaw);
-      _interests = List.from(interestsRaw);
-      _religions = List.from(religionsRaw);
-      _title = userResult.data["title"];
-      _employer = userResult.data["employer"];
 
+      _userId = userId;
+      print("_userId");
+      _first_name = userResult.data["first_name"];
+      print("_first_name");
+      _last_name = userResult.data["last_name"];
+      print("_last_name");
+      _name = userResult.data["name"];
+      print("_name");
+      _school = userResult.data["school"];
+      print("_school");
+      _email = userResult.data["email"];
+      print("_email");
+      _userType = stringToUserType(userResult.data["user_type"]);
+      print("_userType");
+      _product = stringToProduct(userResult.data["product"]);
+      print("_product");
+      //_dateOfBirth = DateTime(dob.year, dob.month, dob.day);
+      print("//");
+      _age = userResult.data["age"];
+      print("_age");
+      _gender = stringToGender(userResult.data["gender"]);
+      print("_gender");
+      _description = userResult.data["description"];
+      print("_description");
+      _ideologies = List.from(ideologiesRaw);
+      print("_ideologies");
+      _interests = List.from(interestsRaw);
+      print("_interests");
+      _religions = List.from(religionsRaw);
+      print("_religions");
+      _title = userResult.data["title"];
+      print("_title");
+      _employer = userResult.data["employer"];
+print("_employer");
       notifyListeners();
       return true;
     }
