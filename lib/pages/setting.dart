@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:school_app/components/buildDivider.dart';
 import 'package:school_app/pages/profile.dart';
 import 'package:school_app/pages/profileSettingsPage.dart';
+import 'package:school_app/pages/settings/ChangePasswordPage.dart';
 
 class Setting extends StatelessWidget {
   bool _isSelectedPushNotification = true;
@@ -36,19 +37,7 @@ class Setting extends StatelessWidget {
                         child: Scaffold(appBar: AppBar(
                           backgroundColor: Colors.transparent,
                           elevation: 0,
-                          title: Text(
-                              _user.name + '\'s profile'),
-                          actions: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                Icons.edit,
-                                color: Colors.black,
-                              ),
-                              onPressed: () {
-                                // do something
-                              },
-                            )
-                          ],
+                          title: Text(_user.name + '\'s profile'),
                         ),body: ProfileSettingsPage(),)
                   ),
                 ),
@@ -70,7 +59,19 @@ class Setting extends StatelessWidget {
             Column(
               children: [
                 ListTile(
-                  onTap: () {},
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                      ChangeNotifierProvider<User>.value(
+                          value: _user,
+                          child: Scaffold(appBar: AppBar(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            title: Text("Change password"),
+                          ),body: ChangePasswordPage(),)
+                      ),
+                    ),
+                  ),
                   leading: Icon(Icons.lock),
                   title: Text("Change Password"),
                   trailing: Icon(Icons.keyboard_arrow_right),

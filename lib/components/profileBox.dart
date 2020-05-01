@@ -73,22 +73,19 @@ class _ProfileBoxState extends State<ProfileBox> {
       children: [
         Flexible(
           flex: 2,
-          child: new TextField(
-            controller: _nameController,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
+          child: new Text(
+            user.name,
+            //decoration: const InputDecoration(
+            //  border: InputBorder.none,
+            //),
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
           ),
         ),
         SizedBox(width: 10),
         Flexible(
           flex: 2,
-          child: new TextField(
-            controller: _ageController,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-            ),
+          child: new Text(
+            user.age.toString(),
             style: TextStyle(fontSize: 30),
           ),
         ),

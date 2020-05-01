@@ -29,7 +29,7 @@ class User extends ChangeNotifier{
   String get description => _description;
   String get employer => _employer;
   String get title => _title;
-  List<String> get ideologies => _ideologies;
+  List<dynamic> get ideologies => _ideologies;
   List<String> get interests => _interests;
   List<String> get religions => _religions;
   UserType get userType => _userType;
@@ -83,7 +83,7 @@ class User extends ChangeNotifier{
     notifyListeners();
   }
 
-  set setIdeologies(List value) {
+  set setIdeologies(List<String> value) {
     _ideologies = value;
     notifyListeners();
   }
