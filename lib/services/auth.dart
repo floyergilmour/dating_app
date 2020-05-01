@@ -14,6 +14,15 @@ class Auth extends ChangeNotifier {
     return authResult.user.uid.toString();
   }
 
+  void _changePassword(String password) async{
+    FirebaseUser user = await _firebaseAuth.currentUser();
+
+    user.updatePassword(password).then((_){
+      print("Succesfull changed password");
+    }).catchError((error){
+      print("Password can't be changed" + error.toString());
+    });
+  }
 
   Future<String> createUserWithEmailAndPassword(String email, String password) async {
     final AuthResult authResult = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
