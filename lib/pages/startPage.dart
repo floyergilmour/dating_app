@@ -4,13 +4,13 @@ import 'package:school_app/components/bottomNavigationBarProvider.dart';
 import 'package:school_app/pages/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
-import 'package:school_app/pages/setting.dart';
+import 'package:school_app/pages/settings/setting.dart';
 
 import 'package:school_app/services/auth.dart';
 
 class StartPage extends StatelessWidget with ChangeNotifier{
 
-  var currentTab = [
+  final currentTab = [
     Setting(),
     Profile(),
     //ProfileSettingsPage()
@@ -19,7 +19,7 @@ class StartPage extends StatelessWidget with ChangeNotifier{
   @override
   Widget build(BuildContext context) {
     final NavbarProvider = Provider.of<BottomNavigationBarProvider>(context, listen: true);
-    UserState _userState = Provider.of<UserState>(context, listen: true);
+    final UserState _userState = Provider.of<UserState>(context, listen: true);
     final _auth = Provider.of<Auth>(context);
 
     return Scaffold(

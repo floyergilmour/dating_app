@@ -6,8 +6,8 @@ import 'package:school_app/pages/profileSettingsPage.dart';
 import 'package:school_app/pages/settings/ChangePasswordPage.dart';
 
 class Setting extends StatelessWidget {
-  bool _isSelectedPushNotification = true;
-  bool _isSelectedHideMyProfile = true;
+  final bool _isSelectedPushNotification = true;
+  final bool _isSelectedHideMyProfile = true;
 
   @override
   Widget build(BuildContext context) {
@@ -111,15 +111,6 @@ class Setting extends StatelessWidget {
       ],
     ),)
     ,
-    );
-  }
-
-  Container _buildDivider(double height) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12),
-      width: double.infinity,
-      height: height,
-      color: Colors.grey.shade400,
     );
   }
 }

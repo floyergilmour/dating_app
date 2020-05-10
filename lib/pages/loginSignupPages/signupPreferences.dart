@@ -88,6 +88,5 @@ class SignupPreferences extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }

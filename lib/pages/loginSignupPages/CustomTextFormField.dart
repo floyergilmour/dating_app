@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  String hint;
-  Function validator;
-  Function onSaved;
-  bool obscureText;
+  final String hint;
+  final Function validator;
+  final Function onSaved;
+  final bool obscureText;
 
   CustomTextFormField({this.hint, this.validator, this.onSaved, this.obscureText=false});
 

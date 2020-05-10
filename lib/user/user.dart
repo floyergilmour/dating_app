@@ -12,18 +12,17 @@ enum Product { premium, free }
 class User extends ChangeNotifier{
   Firestore db = Firestore.instance;
 
-  String _userId, _first_name, _last_name, _school, _email, _description, _employer, _title, _name;
+  String _userId, _firstName, _lastName, _school, _email, _description, _employer, _title, _name;
   List<String> _ideologies, _interests, _religions;
   UserType _userType;
   Product _product;
   int _age;
-  //DateTime _dateOfBirth;
   Gender _gender;
 
   String get userId => _userId;
-  String get firstName => _first_name;
+  String get firstName => _firstName;
   String get name => _name;
-  String get lastName => _last_name;
+  String get lastName => _lastName;
   String get school => _school;
   String get email => _email;
   String get description => _description;
@@ -34,16 +33,15 @@ class User extends ChangeNotifier{
   List<String> get religions => _religions;
   UserType get userType => _userType;
   Product get product => _product;
-  //DateTime get dateOfBirth => _dateOfBirth;
   int get age => _age;
   Gender get gender => _gender;
 
   set setFirstName(String value) {
-    _first_name = value;
+    _firstName = value;
     notifyListeners();
   }
   set setLastName(String value) {
-    _last_name = value;
+    _lastName = value;
     notifyListeners();
   }
 
@@ -97,15 +95,6 @@ class User extends ChangeNotifier{
     _interests = value;
     notifyListeners();
   }
-  //int get age {
-  //
-  //  if (_dateOfBirth == null) {
-  //    return null;
-  //  }
-  //  var secondsDiff = DateTime.now().difference(_dateOfBirth.toLocal());
-  //  var years = (secondsDiff.inDays/365).floor();
-  //  return years;
-  //}
 
   String getFullName() {
     var fName = firstName == null ? '' : this.firstName+" ";
@@ -173,9 +162,9 @@ class User extends ChangeNotifier{
 
       _userId = userId;
       print("_userId");
-      _first_name = userResult.data["first_name"];
+      _firstName = userResult.data["first_name"];
       print("_first_name");
-      _last_name = userResult.data["last_name"];
+      _lastName = userResult.data["last_name"];
       print("_last_name");
       _name = userResult.data["name"];
       print("_name");
@@ -214,13 +203,12 @@ print("_employer");
       print("Setting default values");
 
       _userId = userId;
-      _first_name = null;
-      _last_name = null;
+      _firstName = null;
+      _lastName = null;
       _name = null;
       _school = null;
       _email =null;
       _userType =UserType.admin;
-      //_dateOfBirth =null;
       _gender =Gender.missing;
       _description ='';
       _ideologies =[];
