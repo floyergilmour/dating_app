@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/User/userState.dart';
-import 'package:school_app/pages/loginScreen.dart';
+import 'package:school_app/user/userSignUpLoginData.dart';
+import 'package:school_app/pages/loginSignupPages/loginScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/pages/splash.dart';
 import 'package:school_app/pages/startPage.dart';
 import 'package:school_app/components/bottomNavigationBarProvider.dart';
 import 'package:school_app/services/auth.dart';
 import 'package:school_app/components/formState.dart';
+import 'package:school_app/services/formKey.dart';
 import 'User/user.dart';
 import 'package:school_app/themeColor/themeColor.dart';
 
@@ -29,6 +31,8 @@ class SchoolApp extends StatelessWidget {
               ChangeNotifierProvider(create: (_) => UserState()),
               ChangeNotifierProvider(create: (_) => User()),
               ChangeNotifierProvider(create: (_) => FormStatus()),
+              ChangeNotifierProvider(create: (_) => FormKey()),
+              ChangeNotifierProvider(create: (_) => UserSignUpLoginData()),
             ],
             child: HomePage(),
           )

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/User/user.dart';
-import 'package:school_app/User/userState.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/components/buildDivider.dart';
-import 'package:school_app/pages/profile.dart';
 import 'package:school_app/pages/profileSettingsPage.dart';
 import 'package:school_app/pages/settings/ChangePasswordPage.dart';
 

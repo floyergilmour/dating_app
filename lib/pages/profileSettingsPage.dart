@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/User/user.dart';
-import 'package:school_app/components/CriteriaTag.dart';
 import 'package:school_app/components/CustomRaisedButton.dart';
 import 'package:school_app/components/chipsInput.dart';
 import 'package:school_app/components/customInputCard.dart';
@@ -137,6 +136,20 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                       onChangedFunction: (data) {
                         _user.setIdeologies = data.map((criteriaTag) => criteriaTag.name).cast<String>().toList();
                         },
+                    ),
+                    ChipsInputBuilder(
+                      title: "Religions",
+                      userItemList: _user.religions,
+                      onChangedFunction: (data) {
+                        _user.setReligions = data.map((criteriaTag) => criteriaTag.name).cast<String>().toList();
+                      },
+                    ),
+                    ChipsInputBuilder(
+                      title: "Interest",
+                      userItemList: _user.interests,
+                      onChangedFunction: (data) {
+                        _user.setInterests = data.map((criteriaTag) => criteriaTag.name).cast<String>().toList();
+                      },
                     ),
                     SizedBox(height: 40,),
                     Center(
