@@ -4,7 +4,7 @@ import 'package:school_app/components/customTextField.dart';
 
 class CustomInputCard extends StatelessWidget {
 
-  List<CustomTextField> textFields;
+  final List<CustomTextField> textFields;
 
   CustomInputCard({
     this.textFields

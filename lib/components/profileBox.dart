@@ -23,7 +23,6 @@ class _ProfileBoxState extends State<ProfileBox> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //_buildStuff(),
           _profileBoxTitle(_user),
           SizedBox(height: 13,),
           Row(children: _buildTags(_user.ideologies, Color.fromRGBO(250, 128, 128, 0.8)),),
@@ -75,9 +74,6 @@ class _ProfileBoxState extends State<ProfileBox> {
           flex: 2,
           child: new Text(
             user.name,
-            //decoration: const InputDecoration(
-            //  border: InputBorder.none,
-            //),
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
           ),
         ),

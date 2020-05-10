@@ -9,7 +9,7 @@ class ChipsInputBuilder extends StatelessWidget {
 
   final String title;
   final List<String> userItemList;
-  Function onChangedFunction;
+  final Function onChangedFunction;
 
   ChipsInputBuilder({this.title, this.userItemList, this.onChangedFunction});
 
@@ -24,7 +24,7 @@ class ChipsInputBuilder extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        Text("Ideologies", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
+        Text(title, style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
         ),
         ChipsInput(
           initialValue: userItemList == null

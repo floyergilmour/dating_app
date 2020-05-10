@@ -8,11 +8,6 @@ import 'package:school_app/services/formKey.dart';
 import 'package:school_app/User/user.dart';
 
 class SubmitButtons extends StatelessWidget {
-
-  //Function validateAndSubmit;
-
-  //SubmitButtons({this.validateAndSubmit});
-
   @override
   Widget build(BuildContext context) {
     UserState _userState = Provider.of<UserState>(context, listen: true);

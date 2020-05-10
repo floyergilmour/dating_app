@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class hamburgerMenu extends StatelessWidget {
+class HamburgerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(

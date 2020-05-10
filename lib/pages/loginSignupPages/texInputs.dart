@@ -8,17 +8,6 @@ import 'package:school_app/services/formKey.dart';
 import 'package:school_app/user/userSignUpLoginData.dart';
 
 class TextInputs extends StatelessWidget with ChangeNotifier {
-  //Function onSavedEmail;
-  //Function onSavedPassword;
-  //Function onSavedName;
-  //Function onSavedAge;
-  //
-  //TextInputs(
-  //    {this.onSavedEmail,
-  //    this.onSavedPassword,
-  //    this.onSavedName,
-  //    this.onSavedAge});
-
   Widget build(BuildContext context) {
     FormStatus _formState = Provider.of<FormStatus>(context);
     FormKey _formKey = Provider.of<FormKey>(context);

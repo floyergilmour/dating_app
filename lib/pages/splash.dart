@@ -3,11 +3,10 @@ import 'package:school_app/User/userState.dart';
 import 'package:provider/provider.dart';
 
 class Splash extends StatelessWidget with ChangeNotifier {
-  Splash({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    UserState user = Provider.of<UserState>(context, listen: true);
+    final UserState user = Provider.of<UserState>(context, listen: true);
     print("Changing state in splash from state=" + '${user.status}');
     user.setStatus = UserStatus.UnAuthenticated;
     print("To state=" + '${user.status}');

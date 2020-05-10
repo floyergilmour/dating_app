@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomRaisedButton extends StatelessWidget {
-  String buttonText;
-  Function onPressed;
+  final String buttonText;
+  final Function onPressed;
 
   CustomRaisedButton({this.buttonText, this.onPressed});
 
@@ -18,7 +18,6 @@ class CustomRaisedButton extends StatelessWidget {
         ),
         onPressed: onPressed,
         color: Color.fromRGBO(250, 150, 150, 1),
-        //Color.fromRGBO(150, 247, 210, 1),
         textColor: Colors.white,
         child: Text(
           buttonText,
