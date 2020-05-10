@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/User/userState.dart';
-import 'package:school_app/pages/loginSignupPages/UserSignUpLoginData.dart';
+import 'package:school_app/user/userSignUpLoginData.dart';
 import 'package:school_app/pages/loginSignupPages/loginScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/pages/splash.dart';

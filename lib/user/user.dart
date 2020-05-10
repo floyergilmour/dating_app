@@ -88,6 +88,15 @@ class User extends ChangeNotifier{
     notifyListeners();
   }
 
+  set setReligions(List<String> value) {
+    _religions = value;
+    notifyListeners();
+  }
+
+  set setInterests(List<String> value) {
+    _interests = value;
+    notifyListeners();
+  }
   //int get age {
   //
   //  if (_dateOfBirth == null) {

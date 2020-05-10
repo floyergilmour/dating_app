@@ -5,22 +5,24 @@ import 'package:school_app/pages/loginSignupPages/CustomTextFormField.dart';
 import 'package:school_app/pages/loginSignupPages/signupPreferences.dart';
 import 'package:school_app/pages/loginSignupPages/validators.dart';
 import 'package:school_app/services/formKey.dart';
+import 'package:school_app/user/userSignUpLoginData.dart';
 
 class TextInputs extends StatelessWidget with ChangeNotifier {
-  Function onSavedEmail;
-  Function onSavedPassword;
-  Function onSavedName;
-  Function onSavedAge;
-
-  TextInputs(
-      {this.onSavedEmail,
-      this.onSavedPassword,
-      this.onSavedName,
-      this.onSavedAge});
+  //Function onSavedEmail;
+  //Function onSavedPassword;
+  //Function onSavedName;
+  //Function onSavedAge;
+  //
+  //TextInputs(
+  //    {this.onSavedEmail,
+  //    this.onSavedPassword,
+  //    this.onSavedName,
+  //    this.onSavedAge});
 
   Widget build(BuildContext context) {
     FormStatus _formState = Provider.of<FormStatus>(context);
     FormKey _formKey = Provider.of<FormKey>(context);
+    UserSignUpLoginData _signupData = Provider.of<UserSignUpLoginData>(context);
     var validator = Validators();
 
     List<Widget> _buildPersonalDetailsInput() {
@@ -28,16 +30,15 @@ class TextInputs extends StatelessWidget with ChangeNotifier {
           ? []
           : [
               CustomTextFormField(
-                  hint: "Name",
-                  validator: (value) => validator.nameValidator(value),
-                  onSaved: (value) => onSavedName(value) //_name = val.trim(),
-                  ),
+                hint: "Name",
+                validator: (value) => validator.nameValidator(value),
+                onSaved: (value) => _signupData.setName = value.trim(),
+              ),
               CustomTextFormField(
-                  hint: "Age",
-                  validator: (value) => validator.ageValidator(value),
-                  onSaved: (value) =>
-                      onSavedAge(value) //(age) => _age = int.parse(age),
-                  ),
+                hint: "Age",
+                validator: (value) => validator.ageValidator(value),
+                onSaved: (value) => _signupData.setAge = int.parse(value),
+              ),
             ];
     }
 
@@ -61,22 +62,21 @@ class TextInputs extends StatelessWidget with ChangeNotifier {
                   children: _buildPersonalDetailsInput() +
                       [
                         CustomTextFormField(
-                            hint: "Email or Phone number",
-                            validator: (value) =>
-                                validator.emailValidator(value),
-                            onSaved: (email) =>
-                                onSavedEmail(email) //_email = email.trim(),
-                            ),
+                          hint: "Email or Phone number",
+                          validator: (value) => validator.emailValidator(value),
+                          onSaved: (value) =>
+                              _signupData.setEmail = value.trim(),
+                        ),
                         SizedBox(
                           height: 10,
                         ),
                         CustomTextFormField(
-                            hint: "Password",
-                            validator: (value) =>
-                                validator.passwordValidator(value),
-                            onSaved: (value) =>
-                                onSavedPassword(value) // _password = value,
-                            ),
+                          obscureText: true,
+                          hint: "Password",
+                          validator: (value) =>
+                              validator.passwordValidator(value),
+                          onSaved: (value) => _signupData.setPassword = value,
+                        ),
                       ],
                 ),
               ),
@@ -86,9 +86,7 @@ class TextInputs extends StatelessWidget with ChangeNotifier {
         SizedBox(
           height: 20,
         ),
-        _formState.formType == FormType.login
-            ? Column()
-            : SignupPreferences()
+        _formState.formType == FormType.login ? Column() : SignupPreferences()
       ],
     );
   }

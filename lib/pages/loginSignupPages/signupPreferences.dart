@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:school_app/pages/loginSignupPages/UserSignUpLoginData.dart';
+import 'package:school_app/user/userSignUpLoginData.dart';
 import 'package:school_app/user/user.dart';
 
 class SignupPreferences extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Gender _sexGroupValue = Gender.missing;
-    bool _prefersMales = false, _prefersFemales = false;
     UserSignUpLoginData _loginData = Provider.of<UserSignUpLoginData>(context);
 
     Widget _checkbox(String title, bool boolValue) {
@@ -17,8 +15,10 @@ class SignupPreferences extends StatelessWidget {
           Text(title),
           Checkbox(
             value: boolValue,
-            onChanged: (bool likes) =>
-                _loginData.setGenderPreferences(title, likes),
+            onChanged: (bool likes)
+                {_loginData.setGenderPreferences(title, likes);
+                print(_loginData.genderPreferences);
+                },
           )
         ],
       );
@@ -63,8 +63,8 @@ class SignupPreferences extends StatelessWidget {
             ButtonBar(
               alignment: MainAxisAlignment.center,
               children: [
-                _radio("Male", Gender.male, _sexGroupValue),
-                _radio("Female", Gender.female, _sexGroupValue),
+                _radio("Male", Gender.male, _loginData.gender),
+                _radio("Female", Gender.female, _loginData.gender),
               ],
             ),
           ]),
@@ -79,8 +79,8 @@ class SignupPreferences extends StatelessWidget {
               ButtonBar(
                 alignment: MainAxisAlignment.center,
                 children: [
-                  _checkbox("Males", _prefersMales),
-                  _checkbox("Females", _prefersFemales)
+                  _checkbox("Males", _loginData.genderPreferences.contains("Males")),
+                  _checkbox("Females", _loginData.genderPreferences.contains("Females"))
                 ],
               )
             ],

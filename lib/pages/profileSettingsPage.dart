@@ -137,6 +137,20 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
                         _user.setIdeologies = data.map((criteriaTag) => criteriaTag.name).cast<String>().toList();
                         },
                     ),
+                    ChipsInputBuilder(
+                      title: "Religions",
+                      userItemList: _user.religions,
+                      onChangedFunction: (data) {
+                        _user.setReligions = data.map((criteriaTag) => criteriaTag.name).cast<String>().toList();
+                      },
+                    ),
+                    ChipsInputBuilder(
+                      title: "Interest",
+                      userItemList: _user.interests,
+                      onChangedFunction: (data) {
+                        _user.setInterests = data.map((criteriaTag) => criteriaTag.name).cast<String>().toList();
+                      },
+                    ),
                     SizedBox(height: 40,),
                     Center(
                       child: CustomRaisedButton(buttonText: "Save changes",

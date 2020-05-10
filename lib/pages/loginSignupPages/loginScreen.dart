@@ -27,11 +27,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
 
-    UserState _userState = Provider.of<UserState>(context);
-    Auth _auth = Provider.of<Auth>(context);
-    User _user = Provider.of<User>(context);
+    //UserState _userState = Provider.of<UserState>(context);
+    //Auth _auth = Provider.of<Auth>(context);
+    //User _user = Provider.of<User>(context);
     FormStatus _formState = Provider.of<FormStatus>(context);
-    FormKey _formKey = Provider.of<FormKey>(context);
+    //FormKey _formKey = Provider.of<FormKey>(context);
     /*
     var validator = Validators();
 
@@ -263,18 +263,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         //_buildTexInputs(),
                         TextInputs(
-                          onSavedEmail: (email) => _email = email.trim(),
-                          onSavedPassword: (pwd) => _password = pwd,
-                          onSavedName: (name) => _name = name.trim(),
-                          onSavedAge: (age) => _age = int.parse(age),
+                          //onSavedEmail: (email) => _email = email.trim(),
+                          //onSavedPassword: (pwd) => _password = pwd,
+                          //onSavedName: (name) => _name = name.trim(),
+                          //onSavedAge: (age) => _age = int.parse(age),
                         ),
                         SizedBox(
                           height: 50,
                         ),
                         //_buildSubmitButtons(),
-                        SubmitButtons(
+                    Builder(
+                      builder: (context) => SubmitButtons(
                           //validateAndSubmit: _validateAndSubmit,
-                        ),
+                        )),
                         SizedBox(
                           height: 40,
                         ),

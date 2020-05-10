@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/components/formState.dart';
-import 'package:school_app/pages/loginSignupPages/UserSignUpLoginData.dart';
+import 'package:school_app/user/userSignUpLoginData.dart';
+import 'package:school_app/User/userState.dart';
 import 'package:school_app/services/auth.dart';
 import 'package:school_app/services/formKey.dart';
-import 'package:school_app/user/user.dart';
-import 'package:school_app/user/userState.dart';
+import 'package:school_app/User/user.dart';
 
 class SubmitButtons extends StatelessWidget {
 
@@ -15,11 +15,11 @@ class SubmitButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserState _userState = Provider.of<UserState>(context, listen: true);
     FormKey _formKey = Provider.of<FormKey>(context);
     FormStatus _formState = Provider.of<FormStatus>(context);
     Auth _auth = Provider.of<Auth>(context);
     UserSignUpLoginData _signupData = Provider.of<UserSignUpLoginData>(context);
-    UserState _userState = Provider.of<UserState>(context);
     User _user = Provider.of<User>(context);
 
     void _moveToLogin({bool resetForm:true}) {
@@ -49,14 +49,16 @@ class SubmitButtons extends StatelessWidget {
 
     void register(e, p) async {
       String newUserId = await _auth.createUserWithEmailAndPassword(_signupData.email, _signupData.password);
+      print("Register"+" "+_signupData.age.toString()+" "+_signupData.name+" "+ _signupData.gender.toString()+" "+ _signupData.genderPreferences.toString());
       _auth.updateValues(
           newUserId,
           {
             "name": _signupData.name,
             "age": _signupData.age,
-            "gender": _signupData.gender,
-            "gender_preferences" : _signupData.genderPreferences
-          });
+            "gender": _signupData.gender.toString(),
+            "gender_preferences" : _signupData.getgenderPreferencesAsListOfStrings
+          },
+      );
       _moveToLogin(resetForm: false);
     }
 
