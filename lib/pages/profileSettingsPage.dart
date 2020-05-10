@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/User/user.dart';
-import 'package:school_app/components/CriteriaTag.dart';
 import 'package:school_app/components/CustomRaisedButton.dart';
 import 'package:school_app/components/chipsInput.dart';
 import 'package:school_app/components/customInputCard.dart';

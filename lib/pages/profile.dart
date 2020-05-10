@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:school_app/extensions/extensions.dart';
 import 'package:school_app/components/profileBox.dart';
 
 class Profile extends StatelessWidget {

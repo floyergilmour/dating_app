@@ -1,12 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:school_app/User/user.dart';
 import 'package:school_app/User/userState.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:school_app/pages/loginSignupPages/submitButtons.dart';
+import 'package:school_app/pages/loginSignupPages/texInputs.dart';
 import 'package:school_app/services/auth.dart';
 import 'package:school_app/components/formState.dart';
-import 'package:school_app/extensions/extensions.dart';
+import 'package:school_app/services/formKey.dart';
 
 class LoginScreen extends StatefulWidget with ChangeNotifier {
 
@@ -19,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Gender _sexGroupValue = Gender.missing;
   bool _prefersMales  = false, _prefersFemales = false;
   int _age;
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,25 +31,20 @@ class _LoginScreenState extends State<LoginScreen> {
     Auth _auth = Provider.of<Auth>(context);
     User _user = Provider.of<User>(context);
     FormStatus _formState = Provider.of<FormStatus>(context);
+    FormKey _formKey = Provider.of<FormKey>(context);
+    /*
+    var validator = Validators();
 
     void _moveToLogin({bool resetForm:true}) {
-      resetForm ? _formKey.currentState.reset() : null;
+      resetForm ? _formKey.reset() : null;
       _formState.setFormType = FormType.login;
     }
 
     void _moveToRegister() {
-      _formKey.currentState.reset();
+      _formKey.reset();
       _formState.setFormType = FormType.register;
     }
 
-    String _pwrValidator(password) {
-      Pattern pattern = r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
-      RegExp regex = new RegExp(pattern);
-      if (!regex.hasMatch(password))
-        return 'Invalid password';
-      else
-        return null;
-    }
 
     Widget _checkbox(String title, bool boolValue) {
       return Column(
@@ -90,6 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       );
     }
+
+
 
     Container _signupPreferences() {
       return Container(
@@ -139,192 +139,64 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     }
+*/
+    /*
+    showSnack(String message,BuildContext context){
+      return Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+        ),
+      );
+    }
 
-    void _login(e, p) async {
+    void login(e, p) async {
       String returnedUserId = await _auth.signInWithEmailAndPassword(e, p);
       if (returnedUserId.isNotEmpty) {
         _userState.setStatus = UserStatus.Authenticated;
         await _user.setUserSuccessful(returnedUserId);
-        //notifyListeners();
       }
     }
 
-    List<Widget> _buildPersonalDetailsInput() {
-      return _formState.formType == FormType.login ? []:
-       [
-        TextFormField(
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(20.0),
-            hintText: "Name",
-            border: InputBorder.none,
-            hintStyle: TextStyle(color: Colors.grey),
-          ),
-          validator: (name) {
-            if (name.isEmpty) {
-              return 'Please enter a name';
-            }
-            return null;
-          },
-          onSaved: (name) => _name = name.trim(),
-        ),
-        TextFormField(
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.all(20.0),
-            hintText: "Age",
-            border: InputBorder.none,
-            hintStyle: TextStyle(color: Colors.grey),
-          ),
-          validator: (age) {
-            if (int.parse(age) is int && int.parse(age) >= 18 && int.parse(age) < 120) {
-              return null;
-            }
-            return 'Please enter a your age, you must be over 18';
-          },
-          onSaved: (age) => _age = int.parse(age),
-        ),
-      ];
-    }
+     */
 
-    Column _buildTexInputs() {
-      return Column(
-        children: <Widget>[
-          Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Color.fromRGBO(225, 95, 27, .3),
-                        blurRadius: 20,
-                        offset: Offset(0, 10))
-                  ]),
-              child: Column(children: <Widget>[
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    children: _buildPersonalDetailsInput() + [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(20.0),
-                          hintText: "Email or Phone number",
-                          border: InputBorder.none,
-                          hintStyle: TextStyle(color: Colors.grey),
-                        ),
-                        validator: (email) => EmailValidator.validate(email)
-                            ? null
-                            : "Invalid email address",
-                        onSaved: (email) => _email = email.trim(),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                          hintStyle: TextStyle(color: Colors.grey),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.all(20.0),
-                        ),
-                        onSaved: (password) => _password = password,
-                        validator: _pwrValidator,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-              ),
-          ),
-          SizedBox(height: 20,),
-          _formState.formType == FormType.login? Column() :_signupPreferences()
-        ],
-      );
-    }
+    /*
+    void register(e, p) async {
+      String newUserId = await _auth.createUserWithEmailAndPassword(_email, _password);
 
+      var gender = _sexGroupValue.toShortString();
+      var genderPreferences = [
+        _prefersMales? Gender.male.toShortString():null,
+        _prefersFemales? Gender.female.toShortString():null
+      ].where((x) => x != null).toList();
+
+      _auth.updateValues(
+          newUserId,
+          {
+            "name": _name,
+            "age": _age,
+            "gender": gender,
+            "gender_preferences" : genderPreferences
+          });
+      _moveToLogin(resetForm: false);
+    }
+     */
+
+    /*
     Future<void> _validateAndSubmit(BuildContext context) async {
-      final formState = _formKey.currentState;
-      if (formState.validate()) {
-        formState.save();
+      if (_formKey.validate()) {
+        _formKey.save();
         try {
-          if (_formState.formType == FormType.login) {
-            _login(_email, _password);
-          } else {
-            String newUserId = await _auth.createUserWithEmailAndPassword(_email, _password);
-
-            var gender = _sexGroupValue.toShortString();
-            var genderPreferences = [
-              _prefersMales? Gender.male.toShortString():null,
-              _prefersFemales? Gender.female.toShortString():null
-            ].where((x) => x != null).toList();
-
-            _auth.updateValues(
-                newUserId,
-                {
-                  "name": _name,
-                  "age": _age,
-                  "gender": gender,
-                  "gender_preferences" : genderPreferences
-                });
-            _moveToLogin(resetForm: false);
-          }
+          _formState.formType == FormType.login
+              ? login(_email, _password)
+              : register( _email, _password);
         } catch (error) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              content: Text(error.toString()),
-            ),
-          );
+          showSnack(error.toString(), context);
         }
       } else {
-        Scaffold.of(context).showSnackBar(
-            SnackBar(content: Text('Please enter a valid email')));
+        showSnack("Please enter a valid credentials", context);
       }
     }
-
-    Widget _buildSubmitButtons() {
-      return Column(children: [
-        Builder(
-          builder: (context) => ButtonTheme(
-            height: 50,
-            minWidth: 150,
-            child: RaisedButton(
-              elevation: 1,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50.0),
-              ),
-              onPressed: () => _validateAndSubmit(context),
-              color: _formState.formType == FormType.register ? Color.fromRGBO(250, 150, 150, 1) : Color.fromRGBO(150, 247, 210, 1),
-              textColor: Colors.white,
-              child: _formState.formType == FormType.login
-                  ? Text(
-                      "LOGIN",
-                      style: TextStyle(fontSize: 14),
-                    )
-                  : Text(
-                      "REGISTER",
-                      style: TextStyle(fontSize: 14),
-                    ),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 50,
-        ),
-        InkWell(
-          splashColor: Colors.yellow,
-          hoverColor: Colors.red,
-          highlightColor: Colors.blue,
-          child: _formState.formType == FormType.login
-              ? Text("Register new account",
-                  style: TextStyle(color: Colors.grey))
-              : Text("Login to existing account", style: TextStyle(color: Colors.grey)),
-          onTap: () {
-            _formState.formType == FormType.login
-                ? _moveToRegister()
-                : _moveToLogin(resetForm: true);
-          },
-        )
-      ]);
-    }
+    */
 
     return Scaffold(
       body: Container(
@@ -389,11 +261,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           height: 40,
                         ),
-                        _buildTexInputs(),
+                        //_buildTexInputs(),
+                        TextInputs(
+                          onSavedEmail: (email) => _email = email.trim(),
+                          onSavedPassword: (pwd) => _password = pwd,
+                          onSavedName: (name) => _name = name.trim(),
+                          onSavedAge: (age) => _age = int.parse(age),
+                        ),
                         SizedBox(
                           height: 50,
                         ),
-                        _buildSubmitButtons(),
+                        //_buildSubmitButtons(),
+                        SubmitButtons(
+                          //validateAndSubmit: _validateAndSubmit,
+                        ),
                         SizedBox(
                           height: 40,
                         ),

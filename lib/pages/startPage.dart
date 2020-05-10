@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/User/userState.dart';
 import 'package:school_app/components/bottomNavigationBarProvider.dart';
-import 'package:school_app/pages/profileSettingsPage.dart';
 import 'package:school_app/pages/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';

@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:school_app/services/firestore_database.dart';
 
 class Auth extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final List<String> USER_FIELDS = ['userId', 'firstName', 'lastName', 'middleName', 'school', 'email', 'userType', 'dateOfBirth', 'gender', 'description', 'ideologies', 'interests', 'religions', 'title', 'employer',];
 
   Future<String> signInWithEmailAndPassword(String email, String password) async {
     final AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
@@ -32,7 +30,6 @@ class Auth extends ChangeNotifier {
     notifyListeners();
     return authResult.user.uid.toString();
   }
-
 
   Future<String> currentUser() async {
     final FirebaseUser user = await _firebaseAuth.currentUser();
