@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:school_app/extensions/extensions.dart';
+import 'package:school_app/user/userLocation.dart';
 
 enum Gender { male, female, unknown, missing }
 
@@ -18,6 +19,7 @@ class User extends ChangeNotifier{
   Product _product;
   int _age;
   Gender _gender;
+  UserLocation _userLocation;
 
   String get userId => _userId;
   String get firstName => _firstName;
@@ -28,6 +30,7 @@ class User extends ChangeNotifier{
   String get description => _description;
   String get employer => _employer;
   String get title => _title;
+  UserLocation get userLocation => _userLocation;
   List<dynamic> get ideologies => _ideologies;
   List<String> get interests => _interests;
   List<String> get religions => _religions;
@@ -35,6 +38,7 @@ class User extends ChangeNotifier{
   Product get product => _product;
   int get age => _age;
   Gender get gender => _gender;
+
 
   set setFirstName(String value) {
     _firstName = value;
@@ -93,6 +97,11 @@ class User extends ChangeNotifier{
 
   set setInterests(List<String> value) {
     _interests = value;
+    notifyListeners();
+  }
+
+  set setUserLocation(UserLocation value) {
+    _userLocation = value;
     notifyListeners();
   }
 
@@ -162,10 +171,10 @@ class User extends ChangeNotifier{
 
       _userId = userId;
       print("_userId");
-      _firstName = userResult.data["first_name"];
-      print("_first_name");
-      _lastName = userResult.data["last_name"];
-      print("_last_name");
+      //_firstName = userResult.data["first_name"];
+      //print("_first_name");
+      //_lastName = userResult.data["last_name"];
+      //print("_last_name");
       _name = userResult.data["name"];
       print("_name");
       _school = userResult.data["school"];
@@ -176,8 +185,6 @@ class User extends ChangeNotifier{
       print("_userType");
       _product = stringToProduct(userResult.data["product"]);
       print("_product");
-      //_dateOfBirth = DateTime(dob.year, dob.month, dob.day);
-      print("//");
       _age = userResult.data["age"];
       print("_age");
       _gender = stringToGender(userResult.data["gender"]);
@@ -193,7 +200,7 @@ class User extends ChangeNotifier{
       _title = userResult.data["title"];
       print("_title");
       _employer = userResult.data["employer"];
-print("_employer");
+      print("_employer");
       notifyListeners();
       return true;
     }
@@ -203,8 +210,8 @@ print("_employer");
       print("Setting default values");
 
       _userId = userId;
-      _firstName = null;
-      _lastName = null;
+      //_firstName = null;
+      //_lastName = null;
       _name = null;
       _school = null;
       _email =null;
