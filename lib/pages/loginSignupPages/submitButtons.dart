@@ -43,10 +43,10 @@ class SubmitButtons extends StatelessWidget {
     }
 
     void register(e, p) async {
-      String newUserId = await _auth.createUserWithEmailAndPassword(_signupData.email, _signupData.password);
+      //String newUserId = await _auth.createUserWithEmailAndPassword(_signupData.email, _signupData.password);
       print("Register"+" "+_signupData.age.toString()+" "+_signupData.name+" "+ _signupData.gender.toString()+" "+ _signupData.genderPreferences.toString());
       _auth.updateValues(
-          newUserId,
+          //newUserId,
           {
             "name": _signupData.name,
             "age": _signupData.age,

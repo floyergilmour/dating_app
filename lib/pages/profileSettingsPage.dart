@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +8,7 @@ import 'package:school_app/components/CustomRaisedButton.dart';
 import 'package:school_app/components/chipsInput.dart';
 import 'package:school_app/components/customInputCard.dart';
 import 'package:school_app/components/customTextField.dart';
+import 'package:school_app/services/auth.dart';
 import 'dart:math';
 import 'package:school_app/services/firestore_database.dart';
 
@@ -23,6 +26,7 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   final TextEditingController _titleController = new TextEditingController();
   final TextEditingController _employerController = new TextEditingController();
 
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -35,14 +39,16 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-
     User _user = Provider.of<User>(context);
+    //Auth _auth = Provider.of<Auth>(context);
     String _name = _user.name;
     int _age = _user.age;
     String _employer = _user.employer;
     String _title = _user.title;
     String _description = _user.description;
     List<dynamic> _ideologies = _user.ideologies == null ? [] : _user.ideologies;
+    List<dynamic> _religions = _user.religions == null ? [] : _user.religions;
+    List<dynamic> _interests = _user.interests == null ? [] : _user.interests;
 
     _nameController.text = _name;
     _ageController.text = _age.toString();
@@ -59,6 +65,8 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
       _user.setTitle = _title;
       _user.setDescription = _description;
       _user.setIdeologies = _ideologies;
+      _user.setReligions = _religions;
+      _user.setInterests = _interests;
 
       Map<String, dynamic> data = {
         "name": _name,
@@ -67,6 +75,8 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
         "title": _title,
         "description": _description,
         "ideologies": _ideologies,
+        "religions": _religions,
+        "interests": _interests,
       };
       print("updated $data");
       await DatabaseService(userId: userId).updateUserData(data);

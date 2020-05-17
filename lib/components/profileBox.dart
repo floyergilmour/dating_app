@@ -40,8 +40,7 @@ class _ProfileBoxState extends State<ProfileBox> {
   List<Row> _buildTags(List<String> tags, Color c){
 
     if (tags != null){
-      print("this is _buildTags");
-      print(tags);
+
       var tagsList = tags.map((element) =>
           Row(
             children: <Widget>[
@@ -61,8 +60,6 @@ class _ProfileBoxState extends State<ProfileBox> {
       return tagsList;
     }
     else{
-      print("this is _buildTags case null");
-      print(tags);
       return [Row()];
     }
   }
@@ -73,7 +70,7 @@ class _ProfileBoxState extends State<ProfileBox> {
         Flexible(
           flex: 2,
           child: new Text(
-            user.name,
+            "donny",//user.name,
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
           ),
         ),
