@@ -8,6 +8,7 @@ import 'package:school_app/components/CustomRaisedButton.dart';
 import 'package:school_app/components/chipsInput.dart';
 import 'package:school_app/components/customInputCard.dart';
 import 'package:school_app/components/customTextField.dart';
+import 'package:school_app/components/image_capture.dart';
 import 'package:school_app/services/auth.dart';
 import 'dart:math';
 import 'package:school_app/services/firestore_database.dart';

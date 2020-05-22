@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:school_app/User/user.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/components/buildDivider.dart';
+import 'package:school_app/components/image_capture.dart';
 import 'package:school_app/pages/profileSettingsPage.dart';
 import 'package:school_app/pages/settings/ChangePasswordPage.dart';
 
@@ -72,6 +73,25 @@ class Setting extends StatelessWidget {
                   ),
                   leading: Icon(Icons.lock),
                   title: Text("Change Password"),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                ),
+                BuildDivider(),
+                ListTile(
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                      ChangeNotifierProvider<User>.value(
+                          value: _user,
+                          child: Scaffold(appBar: AppBar(
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            title: Text("Profile Picture"),
+                          ),body: ImageCapture(),)
+                      ),
+                    ),
+                  ),
+                  leading: Icon(Icons.picture_in_picture),
+                  title: Text("Change Profile Picture"),
                   trailing: Icon(Icons.keyboard_arrow_right),
                 ),
                 BuildDivider(),

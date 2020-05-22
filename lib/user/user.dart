@@ -101,6 +101,11 @@ class User extends ChangeNotifier{
   }
 
   set setUserLocation(UserLocation value) {
+    print("value");
+    print(value.runtimeType);
+    print("_userLocation");
+    print(_userLocation.runtimeType);
+    assert(value.runtimeType == UserLocation);
     _userLocation = value;
     notifyListeners();
   }

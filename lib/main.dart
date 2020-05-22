@@ -15,6 +15,8 @@ import 'package:school_app/services/formKey.dart';
 import 'User/user.dart';
 import 'package:school_app/themeColor/themeColor.dart';
 import 'dart:async';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(SchoolApp());
@@ -28,16 +30,9 @@ class SchoolApp extends StatelessWidget {
         theme: ThemeData(primarySwatch: MaterialColor(0xFFFA8080, color)),
         home: MultiProvider(
           providers: [
-            //StreamProvider<Stream<UserLocation>>.value(
-            //    initialData: LocationService().locationStream,
-            //    builder: (context, UserLocation()) => return;
-            //),
-            //StreamProvider(create: (context) => LocationService().getLoc(), initialData: Stream.value(UserLocation(latitude:  123.2,longitude:123.4,))),
-            //StreamProvider.value(value: LocationService().locationStream,initialData: LocationService().locationStream,),
             StreamProvider<UserLocation>.value(
               value: LocationService().locationStream,
             ),
-
             ChangeNotifierProvider(
                 create: (_) => BottomNavigationBarProvider()),
             ChangeNotifierProvider(create: (_) => Auth()),
@@ -60,26 +55,24 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-
     UserState _userState = Provider.of<UserState>(context);
     Auth _auth = Provider.of<Auth>(context);
     final streamLocation = Provider.of<UserLocation>(context, listen: true);
-
-    Map<String,dynamic> maps = {
-      "current_location" : GeoPoint(
-          streamLocation.longitude,
-          streamLocation.latitude
-      )
-    };
-    Timer.periodic(Duration(minutes: 1), (Timer t) => _auth.updateValues(maps));
-
+    User _user = Provider.of<User>(context);
+    //
+    //Map<String, dynamic> maps = {
+    //  "current_location":
+    //      GeoPoint(streamLocation.longitude, streamLocation.latitude)
+    //};
+    //Timer.periodic(Duration(seconds: 3), (Timer t) => _auth.updateValues(maps));
+    //_user.setUserLocation(streamLocation);
+    //_user.setUserLocation = streamLocation;
     switch (_userState.status) {
       case UserStatus.Uninitialized:
         print("main.dart: Splash(): Switch case Uninitialized");
         return Splash();
       case UserStatus.UnAuthenticated:
-        print(
-            "main.dart: LoginScreen(): Switch case Authenticating or Unauthenticated");
+        print("main.dart: LoginScreen(): Switch case Authenticating or Unauthenticated");
         return LoginScreen();
       case UserStatus.Authenticated:
         print("main.dart: StartPage(): Authenticated");

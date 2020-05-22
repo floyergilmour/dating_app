@@ -8,6 +8,11 @@ class UserLocation {
 
   UserLocation({this.latitude, this.longitude});
 
+  @override
+  String toString(){
+    return "(Longitude: ${longitude.toString()}, Latitude: ${latitude.toString()} )";
+  }
+
   set setLongitude(num lat) {
     longitude = lat;
     //notifyListeners();
