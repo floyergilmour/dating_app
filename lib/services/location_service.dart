@@ -7,12 +7,19 @@ import 'package:school_app/user/userLocation.dart';
 * From this website: https://www.filledstacks.com/snippet/build-a-flutter-location-service/
 * */
 class LocationService {
+
+  @override
+  void initState() {
+    Timer.periodic(Duration(minutes: 1), (Timer t) => LocationService());
+  }
+
+
   UserLocation _currentLocation;
 
   Location location = new Location();
 
   StreamController<UserLocation> _locationController =
-      StreamController<UserLocation>.broadcast();
+  StreamController<UserLocation>.broadcast();
 
   Stream<UserLocation> get locationStream => _locationController.stream;
 
@@ -23,20 +30,25 @@ class LocationService {
       if (granted == PermissionStatus.GRANTED) {
         // If granted listen to the onLocationChanged stream and emit over our controller
         print("location: $location");
-        var t = location.getLocation().then((value) =>
-            print(value.longitude));
-        location.onLocationChanged().listen((locationData) {
-          print("locationData: $locationData");
-          if (locationData != null) {
-            _locationController.add(UserLocation(
-              latitude: locationData.latitude,
-              longitude: locationData.longitude,
-            ));
-          }
-        });
+        location.getLocation().then((locationData) =>
+        {
+        _locationController.add(UserLocation(
+        latitude: locationData.latitude,
+        longitude: locationData.longitude,
+        ))
       }
+      );
+      //location.onLocationChanged().listen((locationData) {
+      //  print("locationData: $locationData");
+      //  if (locationData != null) {
+      //    _locationController.add(UserLocation(
+      //      latitude: locationData.latitude,
+      //      longitude: locationData.longitude,
+      //    ));
+      //  }
+      //});
+    }
     });
-
   }
 
   Future<UserLocation> getLocation() async {

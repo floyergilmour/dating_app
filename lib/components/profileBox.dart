@@ -32,6 +32,7 @@ class _ProfileBoxState extends State<ProfileBox> {
           Row(children: _buildTags(_user.interests, Color.fromRGBO(150, 247, 210, 0.8)),),
           SizedBox(height: 13,),
           Text(_user.description ?? '',),
+          Text(_user.userLocation.toString() ?? '',),
         ],
       ),
     );
@@ -70,7 +71,7 @@ class _ProfileBoxState extends State<ProfileBox> {
         Flexible(
           flex: 2,
           child: new Text(
-            "donny",//user.name,
+            user.name,
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30),
           ),
         ),
