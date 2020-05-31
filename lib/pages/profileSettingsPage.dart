@@ -41,7 +41,6 @@ class _ProfileSettingsPageState extends State<ProfileSettingsPage> {
   @override
   Widget build(BuildContext context) {
     User _user = Provider.of<User>(context);
-    //Auth _auth = Provider.of<Auth>(context);
     String _name = _user.name;
     int _age = _user.age;
     String _employer = _user.employer;

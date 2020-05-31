@@ -10,6 +10,10 @@ import 'package:school_app/user/user.dart';
 import 'ImageUploader.dart';
 
 class ImageCapture extends StatefulWidget {
+  final String userId;
+
+  ImageCapture({Key key, this.userId});
+
   @override
   _ImageCaptureState createState() => _ImageCaptureState();
 }
@@ -41,7 +45,6 @@ class _ImageCaptureState extends State<ImageCapture> {
 
   @override
   Widget build(BuildContext context) {
-    //User _user = Provider.of<User>(context);
     return Scaffold(
       bottomNavigationBar: BottomAppBar(
         child: Row(

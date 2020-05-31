@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:math';
 import 'package:school_app/components/profileBox.dart';
+import 'package:school_app/User/user.dart';
 
 class Profile extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
-
+    User _user = Provider.of<User>(context, listen: true);
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -18,14 +18,12 @@ class Profile extends StatelessWidget {
             delegate: _SliverAppBarDelegate(),
           ),
           SliverList(
-            delegate: SliverChildListDelegate(
-                [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ProfileBox(),
-                ]
-            ),
+            delegate: SliverChildListDelegate([
+              SizedBox(
+                height: 10,
+              ),
+              ProfileBox(),
+            ]),
           ),
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -34,10 +32,25 @@ class Profile extends StatelessWidget {
             delegate:
                 SliverChildBuilderDelegate((BuildContext context, int index) {
               return Container(
-                  child: Image(
-                    image: AssetImage(
-                        "/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
-                    fit: BoxFit.fitHeight,
+                  child: FutureBuilder<Image>(
+                    future: Future.value(_user.profilePicture),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<Image> snapshot) {
+                      if ([
+                        ConnectionState.waiting,
+                        ConnectionState.active,
+                        ConnectionState.none,
+                      ].contains(snapshot.connectionState)) {
+                        return CircleAvatar(
+                            child: new Text(_user.getFirstLetterOfName()));
+                      } else if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasError) {
+                          print("has error:" + snapshot.error.toString());
+                          return Image.asset("assets/images/harvard.jpg");
+                        } else
+                          return _user.profilePicture;
+                      } else return Text(_user.getFirstLetterOfName());
+                    },
                   ),
                   //color: _randomColor(index),
                   height: 200.0);
@@ -73,9 +86,18 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
         children: <Widget>[
           Opacity(
             opacity: animationVal,
-            child: Image(
-              image: AssetImage("/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
-              fit: BoxFit.fitWidth,
+            child: ChangeNotifierProvider<User>(
+              create: (_) => User(),
+              child: Consumer(
+                builder: (context, User _user, _) => Image(
+                  //image: AssetImage("/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
+                  image: _user.profilePicture != null
+                      ? _user.profilePicture //NetworkImage(_user.profileUrl)
+                      : AssetImage(
+                          "/Users/donnyh/code/school_app/assets/images/mockProfileImage.jpeg"),
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
             ),
           ),
           Positioned(
