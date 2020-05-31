@@ -1,27 +1,28 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:school_app/services/firestore_database.dart';
-import 'package:school_app/user/userLocation.dart';
 
 class Auth extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<String> signInWithEmailAndPassword(String email, String password) async {
     final AuthResult authResult = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-    notifyListeners();
     return authResult.user.uid.toString();
   }
 
-  void changePassword(String password) async{
+   Future<String> changePassword(String password) async{
     FirebaseUser user = await _firebaseAuth.currentUser();
 
-    user.updatePassword(password).then((_){
-      print("Succesfull changed password");
+    String res = await user.updatePassword(password).then((_){
+      print("here");
+      return null;
     }).catchError((error){
-      print("Password can't be changed" + error.toString());
+      print("error"+error.toString());
+      return ("changePassword" + error.toString());
     });
+
+    return res.toString();
   }
 
   //void setUserLocation() async{

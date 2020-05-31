@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -5,26 +6,28 @@ import 'package:school_app/extensions/extensions.dart';
 import 'package:school_app/user/userLocation.dart';
 
 enum Gender { male, female, unknown, missing }
-
 enum UserType { admin, teacher, student, parent, missing }
-
 enum Product { premium, free }
 
-class User extends ChangeNotifier{
+class User extends ChangeNotifier {
   Firestore db = Firestore.instance;
+  FirebaseStorage storage = new FirebaseStorage(
+      storageBucket: 'gs://school-app-dff02.appspot.com/'
+  );
 
-  String _userId, _firstName, _lastName, _school, _email, _description, _employer, _title, _name;
+  String _userId, _school, _email, _description, _employer, _title, _name;
   List<String> _ideologies, _interests, _religions;
   UserType _userType;
   Product _product;
   int _age;
   Gender _gender;
   UserLocation _userLocation;
+  Image _profilePicture;
+  NetworkImage _profilePictureNetwork;
+  String _profilePictureUrl;
 
   String get userId => _userId;
-  String get firstName => _firstName;
   String get name => _name;
-  String get lastName => _lastName;
   String get school => _school;
   String get email => _email;
   String get description => _description;
@@ -38,14 +41,13 @@ class User extends ChangeNotifier{
   Product get product => _product;
   int get age => _age;
   Gender get gender => _gender;
+  Image get profilePicture => _profilePicture;
+  NetworkImage get profilePictureNetwork => _profilePictureNetwork;
+  String get profilePictureUrl => _profilePictureUrl;
 
-
-  set setFirstName(String value) {
-    _firstName = value;
-    notifyListeners();
-  }
-  set setLastName(String value) {
-    _lastName = value;
+  set setProfilePicture(Image value) {
+    print("setProfilePicture: " + value.toString());
+    _profilePicture = value;
     notifyListeners();
   }
 
@@ -101,26 +103,15 @@ class User extends ChangeNotifier{
   }
 
   set setUserLocation(UserLocation value) {
-    print("value");
-    print(value.runtimeType);
-    print("_userLocation");
-    print(_userLocation.runtimeType);
-    assert(value.runtimeType == UserLocation);
     _userLocation = value;
     notifyListeners();
   }
 
-  String getFullName() {
-    var fName = firstName == null ? '' : this.firstName+" ";
-    var lName = lastName == null ? '' : this.lastName;
-    return fName.capitalize() + lName.capitalize();
+  String getFirstLetterOfName() {
+    var fName = name == null ? '' : this.name[0].toUpperCase();
+    return fName;
   }
 
-  String getInitials() {
-    var fName = firstName == null ? '' : this.firstName[0].toUpperCase();
-    var lName = lastName == null ? '' : this.lastName[0].toUpperCase();
-    return fName + lName;
-  }
   Gender stringToGender([String genderInput]){
     if(genderInput == null){
       return Gender.missing;
@@ -160,6 +151,32 @@ class User extends ChangeNotifier{
     }
   }
 
+  Future profileURL() async {
+    StorageReference imageLink = storage
+        .ref()
+        .child(_userId)
+        .child("profile_picture.png");
+    Future imageUrl = await imageLink.getDownloadURL();
+    return imageLink.getDownloadURL();
+  }
+  Future<String> getProfilePicture() async {
+    StorageReference imageLink = storage
+        .ref()
+        .child(_userId)
+        .child("profile_picture.png");
+    final imageUrl = await imageLink.getDownloadURL();
+    //_profilePicture = NetworkImage(imageUrl);
+    print(imageUrl.toString());
+    _profilePicture = Image.network(imageUrl.toString());
+    _profilePictureNetwork = NetworkImage(imageUrl.toString());
+    _profilePictureUrl = imageUrl.toString();
+    print("imageUrl.toString(): " + imageUrl.toString());
+    notifyListeners();
+
+    //return Future.value(NetworkImage(imageUrl));
+    return Future.value(imageUrl.toString());
+  }
+
   Future<bool> setUserSuccessful(String userId) async {
     print(userId);
     try{
@@ -173,50 +190,26 @@ class User extends ChangeNotifier{
       Iterable interestsRaw = userResult.data["interests"] == null ? [] : userResult.data["interests"];
       Iterable religionsRaw = userResult.data["religions"] == null ? [] : userResult.data["religions"];
 
-
       _userId = userId;
-      print("_userId");
-      //_firstName = userResult.data["first_name"];
-      //print("_first_name");
-      //_lastName = userResult.data["last_name"];
-      //print("_last_name");
       _name = userResult.data["name"];
-      print("_name");
       _school = userResult.data["school"];
-      print("_school");
       _email = userResult.data["email"];
-      print("_email");
       _userType = stringToUserType(userResult.data["user_type"]);
-      print("_userType");
       _product = stringToProduct(userResult.data["product"]);
-      print("_product");
       _age = userResult.data["age"];
-      print("_age");
       _gender = stringToGender(userResult.data["gender"]);
-      print("_gender");
       _description = userResult.data["description"];
-      print("_description");
       _ideologies = List.from(ideologiesRaw);
-      print("_ideologies");
       _interests = List.from(interestsRaw);
-      print("_interests");
       _religions = List.from(religionsRaw);
-      print("_religions");
       _title = userResult.data["title"];
-      print("_title");
       _employer = userResult.data["employer"];
-      print("_employer");
       notifyListeners();
       return true;
     }
     catch(error){
-      print('========= Error in getting data =========');
       print(error);
-      print("Setting default values");
-
       _userId = userId;
-      //_firstName = null;
-      //_lastName = null;
       _name = null;
       _school = null;
       _email =null;
