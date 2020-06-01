@@ -51,6 +51,18 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 
+  set setProfilePictureNetwork(NetworkImage value) {
+    print("setProfilePictureNetwork: " + value.toString());
+    _profilePictureNetwork = value;
+    notifyListeners();
+  }
+
+  set setProfilePictureUrl(String value) {
+    print("setProfilePictureNetwork: " + value.toString());
+    _profilePictureUrl = value;
+    notifyListeners();
+  }
+
   set setName(String value) {
     _name = value;
     notifyListeners();
@@ -170,6 +182,10 @@ class User extends ChangeNotifier {
     _profilePicture = Image.network(imageUrl.toString());
     _profilePictureNetwork = NetworkImage(imageUrl.toString());
     _profilePictureUrl = imageUrl.toString();
+
+    setProfilePicture = Image.network(imageUrl.toString());
+    setProfilePictureNetwork = NetworkImage(imageUrl.toString());
+    setProfilePictureUrl = imageUrl.toString();
     print("imageUrl.toString(): " + imageUrl.toString());
     notifyListeners();
 
