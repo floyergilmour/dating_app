@@ -49,16 +49,6 @@ class _ImageCaptureState extends State<ImageCapture> {
       bottomNavigationBar: BottomAppBar(
         child: Row(
           children: <Widget>[
-            Row(children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.photo_camera),
-                onPressed: () => _pickImage(ImageSource.camera),
-              ),
-              IconButton(
-                icon: Icon(Icons.photo_library),
-                onPressed: () => _pickImage(ImageSource.gallery),
-              )
-            ],),
             IconButton(
               icon: Icon(Icons.photo_camera),
               onPressed: () => _pickImage(ImageSource.camera),

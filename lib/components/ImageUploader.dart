@@ -27,14 +27,14 @@ class _ImageUploaderState extends State<ImageUploader> {
   Widget build(BuildContext context) {
     User _user = Provider.of<User>(context, listen: true);
 
-    void startUpload() {
+    void startUpload() async{
       String fileName = "${_user.userId}/profile_picture.png";
       StorageReference fileReference =_storage.ref().child(fileName);
 
       setState(() {
         _uploadTask = fileReference.putFile(widget.file);
       });
-      _user.getProfilePicture();
+      await _user.getProfilePicture();
     }
 
     if (_uploadTask != null) {
@@ -64,7 +64,7 @@ class _ImageUploaderState extends State<ImageUploader> {
                 ),
 
               LinearProgressIndicator(value: progressPercent,),
-              Text('${(progressPercent * 100).toStringAsFixed(2)} %')
+              //Text('${(progressPercent * 100).toStringAsFixed(2)} %')
             ],
           );
         },

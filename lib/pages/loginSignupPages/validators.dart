@@ -35,7 +35,7 @@ class Validators {
     if (newPass1 == newPass2 &&
         oldPass != newPass1 &&
         oldPass != newPass2 &&
-        !regex.hasMatch(newPass1)) {
+        regex.hasMatch(newPass1)) {
       return null;
     } else if (newPass1 != newPass2) {
       return throw ("New passwords do not match");
