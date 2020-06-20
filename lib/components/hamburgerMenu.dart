@@ -10,7 +10,7 @@ class HamburgerMenu extends StatelessWidget {
           Expanded(
               flex: 2,
               child: Container(
-                  //width: MediaQuery.of(context).size.width * 0.85,
+                  width: MediaQuery.of(context).size.width * 0.85,
                   child: DrawerHeader(
                     decoration: BoxDecoration(
                         image: DecorationImage(
@@ -32,20 +32,16 @@ class HamburgerMenu extends StatelessWidget {
                 },
               ),
               ListTile(
+                title: Text("Venues"),
+                leading: Icon(Icons.store),
+              ),
+              ListTile(
                 title: Text("Schedule"),
                 leading: Icon(Icons.calendar_today),
               ),
               ListTile(
-                title: Text("Grades"),
-                leading: Icon(Icons.grade),
-              ),
-              ListTile(
                 title: Text("Messages"),
                 leading: Icon(Icons.message),
-              ),
-              ListTile(
-                title: Text("Class"),
-                leading: Icon(Icons.school),
               ),
               ListTile(
                 title: Text("Groups"),
@@ -54,13 +50,6 @@ class HamburgerMenu extends StatelessWidget {
               ListTile(
                 title: Text("Settings"),
                 leading: Icon(Icons.settings),
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                title: Text("Attendance"),
-                leading: Icon(Icons.check),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
