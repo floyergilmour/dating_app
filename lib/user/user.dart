@@ -195,6 +195,7 @@ class User extends ChangeNotifier {
 
   Future<bool> setUserSuccessful(String userId) async {
     print(userId);
+    //db.collection("path").where(field)
     try{
       DocumentSnapshot userResult = (await db
           .collection('user')
