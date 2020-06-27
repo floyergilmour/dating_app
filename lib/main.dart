@@ -14,6 +14,7 @@ import 'package:school_app/services/auth.dart';
 import 'package:school_app/components/formState.dart';
 import 'package:school_app/services/formKey.dart';
 import 'User/user.dart';
+import 'components/route_generator.dart';
 
 void main() {
   runApp(
@@ -38,6 +39,8 @@ class SchoolApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserSignUpLoginData()),
       ],
       child: MaterialApp(
+        initialRoute: "/",
+        onGenerateRoute: RouteGenerator.generateRoute,
         theme: ThemeData(primarySwatch: MaterialColor(0xFFFA8080, color)),
         title: 'School App',
         home: HomePage(),

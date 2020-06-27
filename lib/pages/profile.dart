@@ -10,6 +10,11 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     User _user = Provider.of<User>(context, listen: true);
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverPersistentHeader(

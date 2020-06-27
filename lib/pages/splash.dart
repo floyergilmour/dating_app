@@ -17,7 +17,7 @@ class Splash extends StatelessWidget with ChangeNotifier {
           Center(
             child: Text(
               "Loading",
-              style: TextStyle(fontSize: 36, fontWeight: FontWeight.w900, color: Colors.white),
+              style: TextStyle(fontSize: 56, fontWeight: FontWeight.w900, color: Colors.white),
             ),
           ),
           Center(
