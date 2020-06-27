@@ -14,6 +14,11 @@ class Setting extends StatelessWidget {
   Widget build(BuildContext context) {
     User _user = Provider.of<User>(context, listen: true);
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+      ),
       body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(8, 70, 8, 10),
         child: Column(
@@ -47,10 +52,13 @@ class Setting extends StatelessWidget {
                 ),
                 leading: FutureBuilder(
                   future: Future.value(_user.profilePicture),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<Image> snapshot) {
-                    if ([ConnectionState.waiting, ConnectionState.active, ConnectionState.none]
-                        .contains(snapshot.connectionState)) {
+                  builder:
+                      (BuildContext context, AsyncSnapshot<Image> snapshot) {
+                    if ([
+                      ConnectionState.waiting,
+                      ConnectionState.active,
+                      ConnectionState.none
+                    ].contains(snapshot.connectionState)) {
                       return CircleAvatar(
                           child: new Text(_user.getFirstLetterOfName()));
                     } else {
