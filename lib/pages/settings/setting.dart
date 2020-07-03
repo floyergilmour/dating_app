@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:school_app/User/user.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/components/buildDivider.dart';
+import 'package:school_app/components/constants.dart';
 import 'package:school_app/components/image_capture.dart';
 import 'package:school_app/pages/profileSettingsPage.dart';
 import 'package:school_app/pages/settings/ChangePasswordPage.dart';
@@ -32,9 +33,9 @@ class Setting extends StatelessWidget {
             ),
             Card(
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(CARD_ROUNDED_BORDER_RADIOUS),
               ),
-              elevation: 10,
+              elevation: CARD_ELEVATION,
               child: ListTile(
                 onTap: () => Navigator.of(context).push(
                   MaterialPageRoute(
@@ -78,8 +79,8 @@ class Setting extends StatelessWidget {
             ),
             Card(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              elevation: 10,
+                  borderRadius: BorderRadius.circular(CARD_ROUNDED_BORDER_RADIOUS)),
+              elevation: CARD_ELEVATION,
               child: Column(
                 children: <Widget>[
                   Column(

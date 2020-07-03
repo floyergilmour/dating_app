@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:school_app/User/userState.dart';
 import 'package:school_app/services/location_service.dart';
 import 'package:school_app/themeColor/themeColor.dart';
-import 'package:school_app/user/userLocation.dart';
+import 'package:school_app/user/location.dart';
 import 'package:school_app/user/userSignUpLoginData.dart';
 import 'package:school_app/pages/loginSignupPages/loginScreen.dart';
 import 'package:provider/provider.dart';

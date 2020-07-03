@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:school_app/components/types.dart';
 import 'package:school_app/user/userSignUpLoginData.dart';
 import 'package:school_app/user/user.dart';
 

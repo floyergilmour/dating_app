@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:location/location.dart';
-import 'package:school_app/user/userLocation.dart';
+import 'package:school_app/user/location.dart';
 
 /*
 * From this website: https://www.filledstacks.com/snippet/build-a-flutter-location-service/

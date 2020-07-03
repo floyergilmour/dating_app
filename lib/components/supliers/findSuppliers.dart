@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'CutomListViewBuilder.dart';
+import 'cutomListViewBuilder.dart';
 
 class FindOtherUser extends StatelessWidget {
   @override
@@ -25,7 +25,6 @@ class FindOtherUser extends StatelessWidget {
           body: TabBarView(
             children: [
               CustomListViewBuilder(),
-              //Icon(Icons.local_florist),
               Icon(Icons.local_florist),
               Icon(Icons.local_hotel),
               Icon(Icons.local_shipping),
