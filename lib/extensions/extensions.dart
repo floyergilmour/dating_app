@@ -1,4 +1,5 @@
-import 'package:school_app/User/user.dart';
+import 'package:school_app/components/types.dart' as types;
+import 'package:school_app/components/types.dart';
 
 extension StringExtension on String {
   String capitalize() {
@@ -18,14 +19,14 @@ extension StringExtension on String {
     return !this.isNull();
   }
 }
-extension GenderExtension on Gender {
+extension GenderExtension on types.Gender {
   String toShortString() {
     String genderString = this.toString().split('.').last;
     return genderString.capitalize();
   }
 }
 
-extension UserTypeExtension on UserType {
+extension UserTypeExtension on types.UserType {
   String toShortString() {
     String genderString = this.toString().split('.').last;
     return genderString.capitalize();

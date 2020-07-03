@@ -2,12 +2,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:school_app/extensions/extensions.dart';
-import 'package:school_app/user/userLocation.dart';
-
-enum Gender { male, female, unknown, missing }
-enum UserType { admin, teacher, student, parent, missing }
-enum Product { premium, free }
+import 'package:school_app/components/types.dart';
+import 'package:school_app/user/location.dart';
+import 'package:school_app/extensions/extensions.dart' as ext;
 
 class User extends ChangeNotifier {
   Firestore db = Firestore.instance;
@@ -137,19 +134,7 @@ class User extends ChangeNotifier {
     }
   }
 
-  UserType stringToUserType([String userTypeInput]){
-    if(userTypeInput == null){
-      return UserType.missing;
-    }
-    else{
-      switch(userTypeInput){
-        case "admin": return UserType.admin;
-        case "teacher": return UserType.teacher;
-        case "student": return UserType.student;
-        case "parent": return UserType.parent;
-      }
-    }
-  }
+
 
   Product stringToProduct([String productInput]){
     if(productInput == null){
@@ -230,7 +215,7 @@ class User extends ChangeNotifier {
       _name = null;
       _school = null;
       _email =null;
-      _userType =UserType.admin;
+      _userType = UserType.unknown;
       _gender =Gender.missing;
       _description ='';
       _ideologies =[];

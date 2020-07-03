@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:school_app/user/user.dart';
+import 'package:school_app/components/types.dart';
+
 
 class UserSignUpLoginData extends ChangeNotifier{
 

@@ -66,7 +66,9 @@ flutter:
   assets:
     - assets/images/hvitfeldtska.png
     - assets/images/harvard.jpg
-    - assets/images/mockProfileImage.jpeg
+    - assets/images/flowers1.jpg
+    - assets/images/flowers2.jpg
+    - assets/images/flowers3.jpg
     - assets/images/mockProfileImage.jpeg
     - assets/icons/facebook_logo.png
     - assets/icons/google_logo.png
@@ -97,3 +99,8 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+analyzer:
+  strong-mode: true
+  language:
+    enableSuperMixins:true
