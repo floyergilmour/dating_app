@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:school_app/pages/chat/chat.dart';
 
-import 'supplierCards.dart';
 
-class FindSuppliers extends StatelessWidget {
+
+class SupplierChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
@@ -24,12 +25,12 @@ class FindSuppliers extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
-              CustomListViewBuilder(),
-              CustomListViewBuilder(),//Icon(Icons.local_florist),
-              CustomListViewBuilder(),//Icon(Icons.local_hotel),
-              CustomListViewBuilder(),//Icon(Icons.local_shipping),
-              CustomListViewBuilder(),//Icon(Icons.mail_outline),
-              CustomListViewBuilder(),//Icon(Icons.restaurant_menu),
+              Chat(),
+              Chat(),//Icon(Icons.local_florist),
+              Chat(),//Icon(Icons.local_hotel),
+              Chat(),//Icon(Icons.local_shipping),
+              Chat(),//Icon(Icons.mail_outline),
+              Chat(),//Icon(Icons.restaurant_menu),
             ],
           ),
         ),
