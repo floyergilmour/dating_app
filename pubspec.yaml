@@ -69,6 +69,9 @@ flutter:
     - assets/images/flowers1.jpg
     - assets/images/flowers2.jpg
     - assets/images/flowers3.jpg
+    - assets/images/venue1.jpeg
+    - assets/images/venue2.jpeg
+    - assets/images/venue3.jpg
     - assets/images/mockProfileImage.jpeg
     - assets/icons/facebook_logo.png
     - assets/icons/google_logo.png

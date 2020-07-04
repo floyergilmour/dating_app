@@ -30,7 +30,6 @@ class UserEntity extends ChangeNotifier{
       this.pictureNetwork,
       this.pictureUrl
       );
-
 }
 
 mixin ContactPerson{

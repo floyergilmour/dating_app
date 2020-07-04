@@ -5,6 +5,7 @@ import 'package:school_app/components/hamburgerMenu.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:school_app/components/supliers/findSuppliers.dart';
+import 'package:school_app/pages/chat/supplierChat.dart';
 import 'package:school_app/services/auth.dart';
 import 'chat/chat.dart';
 
@@ -18,8 +19,8 @@ class StartPage extends StatelessWidget with ChangeNotifier {
     final Auth _auth = Provider.of<Auth>(context);
 
     final currentTab = [
-      Chat(),
-      FindOtherUser()
+      SupplierChat(),
+      FindSuppliers()
       //Consumer<User>(builder: (_, user, __) => Profile()),
     ];
 

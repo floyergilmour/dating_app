@@ -3,28 +3,31 @@ import 'package:school_app/components/constants.dart';
 import 'package:school_app/user/supplier.dart';
 
 class CustomListViewBuilder extends StatelessWidget {
-  List<List<String>> supplierCollection = [
+  List<List<dynamic>> supplierCollection = [
     [
       "assets/images/flowers1.jpg",
       "Gunnilas blommsterbutik",
-      "Small shop from Stockholm with a personal touch"
+      "Small shop from Stockholm with a personal touch",
+      97
     ],
     [
       "assets/images/flowers2.jpg",
       "Von Barmhertigs blommor",
-      "The most high end bridal shop in Sweden"
+      "The most high end bridal shop in Sweden",
+      12
     ],
     [
       "assets/images/flowers3.jpg",
       "Roséns",
-      "Family owned bridal flower shop"
+      "Family owned bridal flower shop",
+      102
     ]
   ];
 
   @override
   Widget build(BuildContext context) {
     
-    Card getCard(String title, String description, String imageAddress) {
+    Card getCard(String title, String description, String imageAddress, int distance) {
       return Card(
         semanticContainer: true,
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -66,8 +69,8 @@ class CustomListViewBuilder extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
                       ),
                       subtitle: Text(description),
-
-                    )
+                      trailing: Text(distance.toString()+"km"),
+                    ),
                   ],
                 ),
               ),
@@ -78,7 +81,7 @@ class CustomListViewBuilder extends StatelessWidget {
     }
     
     List<Card> inputs =
-        supplierCollection.map((e) => getCard(e[1], e[2], e[0])).toList();
+        supplierCollection.map((e) => getCard(e[1], e[2], e[0], e[3])).toList();
     return Container(
       //color: Color.fromRGBO(222, 2, 1, 0.5),
       child: new ListView.builder(
