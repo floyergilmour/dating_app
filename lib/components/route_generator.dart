@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/components/profileBox.dart';
+import 'package:school_app/components/supliers/venue_page.dart';
 import 'package:school_app/main.dart';
 import 'package:school_app/pages/loginSignupPages/loginScreen.dart';
 import 'package:school_app/pages/profile.dart';
@@ -9,7 +10,7 @@ import 'package:school_app/pages/supliers/VenuePage.dart';
   class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
-    final args = settings.arguments;
+
     WidgetBuilder builder;
     switch (settings.name) {
       case '/':
@@ -18,15 +19,17 @@ import 'package:school_app/pages/supliers/VenuePage.dart';
         return MaterialPageRoute(builder: (_) => Setting());
       case '/profile':
         return MaterialPageRoute(builder: (_) => Profile());
-      //case '/venue':
-      //  if (args is List<String>) {
-      //    return MaterialPageRoute(
-      //      builder: (_) => VenuePage(
-      //        data: args,
-      //      ),
-      //    );
-      //  }
-      //  return _errorRoute();
+      case '/venue':
+        final VenuePage args = settings.arguments;
+        if (args is VenuePage) {
+          return MaterialPageRoute(
+            builder: (_) => VenuePage(
+            args.title,
+              args.description,
+            ),
+          );
+        }
+        return _errorRoute();
 
       default:
         // If there is no such named route in the switch statement, e.g. /third

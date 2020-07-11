@@ -4,8 +4,8 @@ import 'package:school_app/components/bottomNavigationBarProvider.dart';
 import 'package:school_app/components/hamburgerMenu.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
-import 'package:school_app/components/supliers/findSuppliers.dart';
-import 'package:school_app/pages/chat/supplierChat.dart';
+import 'package:school_app/components/supliers/find_suppliers.dart';
+import 'package:school_app/pages/chat/supplier_chat.dart';
 import 'package:school_app/services/auth.dart';
 import 'chat/chat.dart';
 
