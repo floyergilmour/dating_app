@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/components/constants.dart';
+import 'package:school_app/components/supliers/venue_page.dart';
 import 'package:school_app/user/supplier.dart';
 
 class CustomListViewBuilder extends StatelessWidget {
@@ -39,7 +40,12 @@ class CustomListViewBuilder extends StatelessWidget {
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),
           onTap: () {
-            Navigator.of(context).pushNamed('/venue', arguments: [title]);
+            Navigator.of(context).pushNamed(VenuePage.venueRouteName, arguments:
+            VenuePage(
+              title,
+              description,
+            ));
+            print("going to venue for: "+title);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +95,10 @@ class CustomListViewBuilder extends StatelessWidget {
         itemBuilder: (BuildContext ctxt, int index) {
           return Column(
             children: [
-              inputs[index]
+              Container(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 4),
+                  child: inputs[index]
+              )
             ],
           );
         },
