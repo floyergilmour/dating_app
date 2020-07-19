@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:school_app/User/userState.dart';
-import 'package:school_app/components/bottomNavigationBarProvider.dart';
-import 'package:school_app/components/hamburgerMenu.dart';
+import 'package:school_app/User/user_state.dart';
+import 'package:school_app/components/bottom_navigation_bar_provider.dart';
+import 'package:school_app/components/hamburger_menu.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:school_app/components/supliers/find_suppliers.dart';
@@ -20,7 +20,8 @@ class StartPage extends StatelessWidget with ChangeNotifier {
 
     final currentTab = [
       SupplierChat(),
-      FindSuppliers()
+      FindSuppliers(),
+      FindSuppliers(),
       //Consumer<User>(builder: (_, user, __) => Profile()),
     ];
 
@@ -36,7 +37,10 @@ class StartPage extends StatelessWidget with ChangeNotifier {
       //),
       BottomNavigationBarItem(
           icon: Icon(Icons.chat_bubble), title: Text("Chats")),
-      BottomNavigationBarItem(icon: Icon(Icons.search), title: Text("Search")),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.search), title: Text("Search")),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.check_box), title: Text("Tasks")),
       //BottomNavigationBarItem(
       //  icon: Icon(Icons.exit_to_app),
       //  title: Text("Logout"),

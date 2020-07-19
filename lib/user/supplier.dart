@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:school_app/components/types.dart';
 import 'package:school_app/user/location.dart';
 import 'package:school_app/user/user.dart';
-import 'package:school_app/user/userEntity.dart';
+import 'package:school_app/user/user_entity.dart';
 
 class Supplier extends UserEntity with ContactPerson{
 

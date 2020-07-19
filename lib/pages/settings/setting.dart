@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:school_app/User/user.dart';
 import 'package:provider/provider.dart';
-import 'package:school_app/components/buildDivider.dart';
+import 'package:school_app/components/build_sivider.dart';
 import 'package:school_app/components/constants.dart';
 import 'package:school_app/components/image_capture.dart';
-import 'package:school_app/pages/profileSettingsPage.dart';
-import 'package:school_app/pages/settings/ChangePasswordPage.dart';
+import 'package:school_app/pages/profile_settings_page.dart';
+import 'package:school_app/pages/settings/change_password_page.dart';
 
 class Setting extends StatelessWidget {
   final bool _isSelectedPushNotification = true;

@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/user/user.dart';
 
-import 'ImageUploader.dart';
+import 'Image_uploader.dart';
 
 class ImageCapture extends StatefulWidget {
   final String userId;
