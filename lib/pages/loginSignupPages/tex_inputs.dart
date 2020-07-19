@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:school_app/components/formState.dart';
-import 'package:school_app/pages/loginSignupPages/CustomTextFormField.dart';
-import 'package:school_app/pages/loginSignupPages/signupPreferences.dart';
+import 'package:school_app/components/form_state.dart';
+import 'package:school_app/pages/loginSignupPages/custom_text_form_field.dart';
+import 'package:school_app/pages/loginSignupPages/signup_preferences.dart';
 import 'package:school_app/pages/loginSignupPages/validators.dart';
-import 'package:school_app/services/formKey.dart';
-import 'package:school_app/user/userSignUpLoginData.dart';
+import 'package:school_app/services/form_key.dart';
+import 'package:school_app/user/user_sign_up_login_data.dart';
 
 class TextInputs extends StatelessWidget with ChangeNotifier {
   Widget build(BuildContext context) {

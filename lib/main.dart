@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:school_app/User/userState.dart';
+import 'package:school_app/User/user_state.dart';
 import 'package:school_app/services/location_service.dart';
-import 'package:school_app/themeColor/themeColor.dart';
+import 'package:school_app/themeColor/theme_color.dart';
 import 'package:school_app/user/location.dart';
-import 'package:school_app/user/userSignUpLoginData.dart';
-import 'package:school_app/pages/loginSignupPages/loginScreen.dart';
+import 'package:school_app/user/user_sign_up_login_data.dart';
+import 'package:school_app/pages/loginSignupPages/login_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:school_app/pages/splash.dart';
 import 'package:school_app/pages/startPage.dart';
-import 'package:school_app/components/bottomNavigationBarProvider.dart';
+import 'package:school_app/components/bottom_navigation_bar_provider.dart';
 import 'package:school_app/services/auth.dart';
-import 'package:school_app/components/formState.dart';
-import 'package:school_app/services/formKey.dart';
+import 'package:school_app/components/form_state.dart';
+import 'package:school_app/services/form_key.dart';
 import 'User/user.dart';
 import 'components/route_generator.dart';
 

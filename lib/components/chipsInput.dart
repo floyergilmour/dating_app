@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chips_input/flutter_chips_input.dart';
-import 'package:school_app/components/CriteriaTag.dart';
+import 'package:school_app/components/criteria_tag.dart';
 import 'package:school_app/extensions/extensions.dart';
 
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:school_app/components/profileBox.dart';
+import 'package:school_app/components/profile_box.dart';
 import 'package:school_app/components/supliers/venue_page.dart';
 import 'package:school_app/main.dart';
-import 'package:school_app/pages/loginSignupPages/loginScreen.dart';
+import 'package:school_app/pages/loginSignupPages/login_screen.dart';
 import 'package:school_app/pages/profile.dart';
 import 'package:school_app/pages/settings/setting.dart';
 import 'package:school_app/pages/supliers/VenuePage.dart';

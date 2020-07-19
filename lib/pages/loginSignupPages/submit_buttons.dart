@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:school_app/components/formState.dart';
-import 'package:school_app/user/userSignUpLoginData.dart';
-import 'package:school_app/User/userState.dart';
+import 'package:school_app/components/form_state.dart';
+import 'package:school_app/user/user_sign_up_login_data.dart';
+import 'package:school_app/User/user_state.dart';
 import 'package:school_app/services/auth.dart';
-import 'package:school_app/services/formKey.dart';
+import 'package:school_app/services/form_key.dart';
 import 'package:school_app/User/user.dart';
 
 class SubmitButtons extends StatelessWidget {

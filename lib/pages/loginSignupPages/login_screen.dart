@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
-import 'package:school_app/pages/loginSignupPages/submitButtons.dart';
-import 'package:school_app/pages/loginSignupPages/texInputs.dart';
-import 'package:school_app/components/formState.dart';
+import 'package:school_app/pages/loginSignupPages/submit_buttons.dart';
+import 'package:school_app/pages/loginSignupPages/tex_inputs.dart';
+import 'package:school_app/components/form_state.dart';
 
 class LoginScreen extends StatefulWidget with ChangeNotifier {
   @override

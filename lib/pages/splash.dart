@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:school_app/User/userState.dart';
+import 'package:school_app/User/user_state.dart';
 import 'package:provider/provider.dart';
 
 class Splash extends StatelessWidget with ChangeNotifier {
